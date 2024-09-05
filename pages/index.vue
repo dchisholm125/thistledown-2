@@ -1,3 +1,11 @@
+<script setup lang="ts">
+useHead({
+  titleTemplate: (titleChunk) => {
+    return 'Thistledown Recovery Home';
+  }
+})
+</script>
+
 <template>
 
     <div class="d-flex">
