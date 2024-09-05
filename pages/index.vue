@@ -98,50 +98,46 @@
         </div>
     </div>
 
-    <div class="container col-xxl-8 px-4 py-5">
-        <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
-            <div class="col-10 col-sm-8 col-lg-6">
-                <img src="~/assets/thistledown-logo.svg" class="d-block mx-lg-auto border border-solid rounded img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy">
-            </div>
-            <div class="col-lg-6">
-                <h1 id="our-approach" class="display-5 fw-bold text-body-emphasis lh-1 mb-3">Our Approach</h1>
-                <p class="lead">While we do not offer treatment services, our sober home operates with
+    <div id="our-approach" class="d-flex banner-height m-0 p-0 align-items-center">
+        <div class="col-6 h-100">
+            <img src="~/assets/gary-bendig-b30CHD9UdVs-unsplash.jpg" 
+            style="height: 100%; max-width: 100%; object-fit: cover;" alt="Our Home" loading="lazy">
+        </div>
+        <div class="col-6 px-5">
+            <p class="display-6">CONWAY, NH</p>
+            <p class="display-4">Gateway to Recovery</p>
+            <p class="display-2">Our Approach</p>
+            <p class="lead">While we do not offer treatment services, our sober home operates with
                     guidelines that encourage a sober lifestyle. We require that all residents
                     commit to staying drug and alcohol-free, actively participate in their
                     personal recovery plans, and support one another in their journey. Our
                     house rules are designed to promote respect, responsibility, and personal
                     growth.</p>
-                <p class="lead">Residents are encouraged to engage with external recovery programs,
+            <p class="lead">Residents are encouraged to engage with external recovery programs,
                     attend meetings, and seek out the resources they need to support their
                     sobriety. We believe in the power of community and peer support, and our
                     home serves as a foundation from which residents can build a fulfilling and
                     sober life.</p>
-                <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                    <button type="button" class="btn btn-primary btn-lg px-4 me-md-2">Primary</button>
-                    <button type="button" class="btn btn-outline-secondary btn-lg px-4">Default</button>
-                </div>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                <button type="button" class="btn btn-primary btn-lg px-4 me-md-2">Primary</button>
+                <button type="button" class="btn btn-outline-secondary btn-lg px-4">Default</button>
             </div>
         </div>
     </div>
 
-    <hr class="border border-solid"/>
-
     <div class="container col-xxl-8 px-4 py-5">
         <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
-            <div class="col-lg-6">
+            <div class="col justify-content-center text-center">
                 <h1 id="join-us" class="display-5 fw-bold text-body-emphasis lh-1 mb-3">Join Us</h1>
                 <p class="lead">If you or a loved one is seeking a men's sober living home that prioritizes a
                     sober and supportive living environment, Thistledown Recovery Home may
                     be the right fit. We invite you to learn more about our home and how we
                     can be a part of your recovery journey. Please contact us for more
                     information or to schedule a visit.</p>
-                <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                <div>
                     <button type="button" class="btn btn-primary btn-lg px-4 me-md-2">Primary</button>
                     <button type="button" class="btn btn-outline-secondary btn-lg px-4">Default</button>
                 </div>
-            </div>
-            <div class="col-10 col-sm-8 col-lg-6">
-                <img src="~/assets/thistledown-logo.svg" class="d-block mx-lg-auto border border-solid rounded img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy">
             </div>
         </div>
     </div>
