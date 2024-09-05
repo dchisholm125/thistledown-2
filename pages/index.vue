@@ -4,6 +4,7 @@ useHead({
     return 'Thistledown Recovery Home';
   }
 })
+
 </script>
 
 <template>
@@ -22,7 +23,7 @@ useHead({
             style="height: 100%; max-width: 100%; object-fit: cover;" alt="About Us" loading="lazy">
         </div>
         <div class="col-6 px-5">
-            <p class="display-6">CONWAY, NH</p>
+            <p class="display-6 font-skinny">CONWAY, NH</p>
             <p class="display-4">Gateway to Recovery</p>
             <p class="display-2">About Us</p>
             <p class="lead">Welcome to Thistledown Recovery Home, a dedicated sober living
@@ -40,7 +41,7 @@ useHead({
 
     <div id="our-mission" class="d-flex banner-height m-0 p-0 align-items-center">
         <div class="col-6 px-5">
-            <p class="display-6">CONWAY, NH</p>
+            <p class="display-6 font-skinny">CONWAY, NH</p>
             <p class="display-4">Gateway to Recovery</p>
             <p class="display-2">Our Mission</p>
             <p class="lead">At Thistledown Recovery Home, our mission is to offer a safe and stable
@@ -67,7 +68,7 @@ useHead({
             style="height: 100%; max-width: 100%; object-fit: cover;" alt="Our Home" loading="lazy">
         </div>
         <div class="col-6 px-5">
-            <p class="display-6">CONWAY, NH</p>
+            <p class="display-6 font-skinny">CONWAY, NH</p>
             <p class="display-4">Gateway to Recovery</p>
             <p class="display-2">Our Home</p>
             <p class="lead">Located in Conway, New Hampshire, our sober home is situated in a
@@ -85,7 +86,7 @@ useHead({
 
     <div id="our-community" class="d-flex banner-height m-0 p-0 align-items-center">
         <div class="col-6 px-5">
-            <p class="display-6">CONWAY, NH</p>
+            <p class="display-6 font-skinny">CONWAY, NH</p>
             <p class="display-4">Gateway to Recovery</p>
             <p class="display-2">Our Community</p>
             <p class="lead">Thistledown is situated in a vibrant community, surrounded by a plethora of
@@ -112,7 +113,7 @@ useHead({
             style="height: 100%; max-width: 100%; object-fit: cover;" alt="Our Home" loading="lazy">
         </div>
         <div class="col-6 px-5">
-            <p class="display-6">CONWAY, NH</p>
+            <p class="display-6 font-skinny">CONWAY, NH</p>
             <p class="display-4">Gateway to Recovery</p>
             <p class="display-2">Our Approach</p>
             <p class="lead">While we do not offer treatment services, our sober home operates with
@@ -199,5 +200,9 @@ p, a, .playfair-display-thistledown {
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
+}
+
+.font-skinny {
+    font-weight: 400;
 }
 </style>

@@ -1,10 +1,12 @@
-<script lang="ts">
+<script setup lang="ts">
+const showModal = ref(false)
 
 </script>
 
 <template>
     <div class="d-flex bg-thistle-tan-drk align-items-center justify-content-between w-100 py-2 gap-2">
         <div class="col-1"></div>
+
         <div class="col d-flex ms-5 fs-5 fw-bold gap-2">
             <a href="#about-us"><span>ABOUT US</span></a>
             <a href="#our-mission"><span>OUR MISSION</span></a>
@@ -13,7 +15,14 @@
             <a href="#our-approach"><span>OUR APPROACH</span></a>
             <a href="#join-us"><span>JOIN US</span></a>
         </div>
-        <button class="col-auto btn btn-success">Apply now!</button>
+
+        <button class="col-auto btn btn-success" type="button"
+            @click="showModal = !showModal">
+            Apply now!
+        </button>
+
+        <span>{{ showModal }}</span>
+
         <div class="col-1"></div>
     </div>
 </template>
