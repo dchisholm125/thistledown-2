@@ -1,0 +1,190 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const showModal = defineModel<boolean>()
+
+const applicantName = defineModel<string>('applicantName')
+const todaysDate = ref<Date>(new Date(Date.now()))
+const applicantAddr = defineModel<string>('applicantAddr')
+const applicantPhoneNum = defineModel<string>('applicantPhoneNum')
+const applicantDOB = defineModel<string>('applicantDOB')
+const appContactAndPhone = defineModel<string>('appContactAndPhone')
+const applicantNextOfKin = defineModel<string>('applicantNextOfKin')
+const applicantHearOfUs = defineModel<string>('applicantHearOfUs')
+const applicantProgram = defineModel<string>('applicantProgram')
+const applicantAdmitDate = defineModel<string>('applicantAdmitDate')
+const applicantSupervisor = defineModel<string>('applicantSupervisor')
+const appSupeEmail = defineModel<string>('appSupeEmail')
+const appSupePhone = defineModel<string>('appSupePhone')
+const appLeaveHome = defineModel<boolean>('appLeaveHome')
+const appLeaveReason = defineModel<string>('appLeaveReason')
+const appEvicted = defineModel<boolean>('appEvicted')
+const appEvictWhy = defineModel<string>('appEvictWhy')
+const appLastUse = defineModel<string>('appLastUse')
+const appWarrants = defineModel<string>('appWarrants')
+const appProbation = defineModel<string>('appProbation')
+const appSexOffend = defineModel<boolean>('appSexOffend')
+const appViolence = defineModel<boolean>('appViolence')
+const appViolenceExplain = defineModel<string>('appViolenceExplain')
+const appRestrOrder = defineModel<boolean>('appRestrOrder')
+const appRestrExplain = defineModel<string>('appRestrExplain')
+const appTreatment = defineModel<boolean>('appTreatment')
+const appTreatProvNamePhone = defineModel<string>('appTreatProvNamePhone')
+const appMedication = defineModel<string>('appMedication')
+const appAllergiesExplain = defineModel<string>('appAllergiesExplain')
+const appInhalerExplain = defineModel<string>('appInhalerExplain')
+const appMedConditions = defineModel<string>('appMedConditions')
+const appMentalConditions = defineModel<string>('appMentalConditions')
+const appCovidVacc = defineModel<boolean>('appCovidVacc')
+const appCovidWilling = defineModel<boolean>('appCovidWilling')
+const appMedicalIns = defineModel<boolean>('appMedicalIns')
+const appPolicyNameNum = defineModel<string>('appPolicyNameNum')
+const applicantMarriage = defineModel<string>('applicantMarriage')
+const applicantChildren = defineModel<string>('applicantChildren')
+const appEmployment = defineModel<string>('appEmployment')
+const appDriverLic = defineModel<boolean>('appDriverLic')
+const appParking = defineModel<boolean>('appParking')
+const appCarLicNum = defineModel<string>('appCarLicNum')
+const appMakeModel= defineModel<string>('appMakeModel')
+const appRecoveryQues = defineModel<string>('appRecoveryQues')
+const appHowWeHelp = defineModel<string>('appHowWeHelp')
+const applicantQualities = defineModel<string>('applicantQualities')
+const appTroubleWRules = defineModel<string>('appTroubleWRules')
+const appCharacteristics = defineModel<string[]>('appCharacteristics') //make array of choices
+const appCharOther = defineModel<string[]>('appCharOther')
+const commChars = ['temper','social awkwardness','anxiety','arrogance','bullying','sarcasm','need for control','shyness','tendency to lie','defiance','mistrust of other men','not \'fitting in\'']
+const appReservations = defineModel<string>('appReservations')
+const appWhatShouldWeKnow = defineModel<string>('appWhatShouldWeKnow')
+
+const commCharChoices = ref<string[]>([])
+
+function addRemove(commChar: string) {
+    commCharChoices.value.indexOf(commChar) < 0 ? commCharChoices.value.push(commChar) : commCharChoices.value.splice(commCharChoices.value.indexOf(commChar),1)
+}
+
+</script>
+
+<template>
+    <div v-if="showModal" class="position-absolute d-flex top-0 left-0 z-3 text-white justify-content-center align-items-center bg-opaque-black" 
+        style="height: 100vh; width: 100vw" id="modalDarkBox">
+        <div>{{ (todaysDate.getMonth() + 1) + '/' + todaysDate.getDate() + '/' + todaysDate.getFullYear() }}</div>
+        <div class="d-flex flex-column justify-content-center align-items-center bg-thistle-tan text-black w-75 opacity-100 m-5 p-5" id="modalMatte"
+            style="overflow: scroll;">
+            <form>
+                <div class="d-flex">
+                    <div class="mb-3">
+                        <label for="nameInput" class="form-label">Name</label>
+                        <input v-model="applicantName" type="text" class="form-control" id="nameInput" aria-describedby="nameHelp">
+                        <div id="nameHelp" class="form-text">We'll never share your email with anyone else.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="dateInput" class="form-label">Date</label>
+                        <input type="text" class="form-control" id="dateInput" :value="(todaysDate.getMonth() + 1) + '/' + todaysDate.getDate() + '/' + todaysDate.getFullYear()" disabled>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="addrInput" class="form-label">Address</label>
+                    <input v-model="applicantAddr" type="text" class="form-control" id="addrInput">
+
+                </div>
+                <div class="d-flex">
+                    <InputAndLabel v-model="applicantPhoneNum" labelStr="Phone Number" inputType="text"/>
+                    <InputAndLabel v-model="applicantDOB" labelStr="Date of Birth" inputType="date"/>
+                </div>
+
+                <InputAndLabel v-model="appContactAndPhone" labelStr="Emergency Contact and Phone" inputType="textarea"/>
+                <InputAndLabel v-model="applicantNextOfKin" labelStr="Next of kin, if different" inputType="text"/>
+                <InputAndLabel v-model="applicantHearOfUs" labelStr="How did you hear about us?" inputType="textarea"/>
+                <InputAndLabel v-model="applicantProgram" labelStr="Name of program or facility" inputType="text"/>
+                <InputAndLabel v-model="applicantAdmitDate" labelStr="Date you arrived or were admitted" inputType="date"/>
+                <InputAndLabel v-model="applicantSupervisor" labelStr="Aftercare coordinator or DOC supervisor" inputType="text"/>
+
+                <div class="d-flex">
+                    <InputAndLabel v-model="appSupeEmail" labelStr="Email address" inputType="text"/>
+                    <InputAndLabel v-model="appSupePhone" labelStr="Phone" inputType="text"/>
+                </div>
+
+                <InputAndLabel v-model="appLeaveHome" labelStr="Have you ever been asked to leave a sober house or treatment center?" inputType="radio"/>
+                <InputAndLabel v-model="appLeaveReason" labelStr="If so, what was the reason?" inputType="text"/>
+                <InputAndLabel v-model="appEvicted" labelStr="Have you ever been evicted?" inputType="radio"/>
+                <InputAndLabel v-model="appEvictWhy" labelStr="If so, why?" inputType="text"/>
+                <InputAndLabel v-model="appLastUse" labelStr="When did you last use alcohol or illegal drugs?" inputType="text"/>
+                <InputAndLabel v-model="appWarrants" labelStr="Do you have any outstanding warrants, pending criminal charges or upcoming court dates?" 
+                    inputType="text"/>
+                <InputAndLabel v-model="appProbation" labelStr="Are you on probation, parole, or suspended sentence? Please explain" inputType="text"/>
+                <InputAndLabel v-model="appSexOffend" labelStr="Are you a convicted sex offender and/or required to register as a sex offender in any state?" 
+                    inputType="radio"/>
+                <InputAndLabel v-model="appViolence" labelStr="Do you have a history of violence?" inputType="radio"/>
+                <InputAndLabel v-model="appViolenceExplain" labelStr="Please explain" inputType="text"/>
+                <InputAndLabel v-model="appRestrOrder" labelStr="Are you currently subject to an order of protection (restraining order) by the court?" 
+                    inputType="radio"/>
+                <InputAndLabel v-model="appRestrExplain" labelStr="Please explain" inputType="text"/>
+                <InputAndLabel v-model="appTreatment" labelStr="Are you undergoing medication assisted treatment (MAT/MAR) such as methadone or suboxone?" 
+                    inputType="radio"/>
+                <InputAndLabel v-model="appTreatProvNamePhone" labelStr="Provider name and contact information" 
+                    inputType="text"/>
+                <InputAndLabel v-model="appMedication" labelStr="Please list any physician-prescribed medication" 
+                    inputType="text"/>
+                <InputAndLabel v-model="appAllergiesExplain" labelStr="Do you have any allergies?" inputType="text"/>
+                <InputAndLabel v-model="appInhalerExplain" labelStr="Do you use a rescue inhaler or Epipen?" inputType="text"/>
+                <InputAndLabel v-model="appMedConditions" labelStr="Other than alcoholism and/or addiction, do you have any medical
+                    conditions or physical disabilities we should be aware of?" inputType="text"/>
+                <InputAndLabel v-model="appMentalConditions" labelStr="Other than alcoholism and/or addiction, do you have any mental health
+                    issues or disabilities we should be aware of?" inputType="text"/>
+                <InputAndLabel v-model="appCovidVacc" labelStr="Have you been vaccinated against COVID-19?" inputType="radio"/>
+                <InputAndLabel v-if="!appCovidVacc" v-model="appCovidWilling" labelStr="Are you willing to be vaccinated?" inputType="radio"/>
+                <InputAndLabel v-model="appMedicalIns" labelStr="Do you have medical insurance (in case of medical emergency)?" inputType="radio"/>
+                <InputAndLabel v-if="appMedicalIns" v-model="appPolicyNameNum" labelStr="Policy name/number" inputType="text"/>
+
+                <h5>General Information:</h5>
+                
+                <div class="d-flex">
+                    <InputAndLabel v-model="applicantMarriage" labelStr="Marital Status" inputType="text"/>
+                    <InputAndLabel v-model="applicantChildren" labelStr="Children?" inputType="text"/>
+                </div>
+                <InputAndLabel v-model="appEmployment" labelStr="Please tell us about your current employment/volunteer/student status
+                    (where/hours/supervisor, etc.)" inputType="textarea"/>
+                <InputAndLabel v-model="appDriverLic" :labelStr="'Do you have a valid driver\’s license?'" inputType="radio"/>
+                <InputAndLabel v-model="appParking" labelStr="Will you need parking?" inputType="radio"/>
+                <InputAndLabel v-if="appParking" v-model="appCarLicNum" labelStr="If so, license number and state" inputType="text"/>
+                <InputAndLabel v-if="appParking" v-model="appMakeModel" labelStr="Make/Model/VIN" inputType="text"/>
+                <InputAndLabel v-model="appRecoveryQues" labelStr="What is the biggest challenge you face in sustaining your recovery?" inputType="textarea"/>
+                <InputAndLabel v-model="appHowWeHelp" labelStr="How do you expect being a part of our home will help with your recovery?" inputType="textarea"/>
+                <InputAndLabel v-model="applicantQualities" labelStr="What personal qualities will you contribute to the mutual support we share in our home?" 
+                    inputType="textarea"/>
+                <InputAndLabel v-model="appTroubleWRules" :labelStr="'Is there any reason you might have trouble following our home\’s guidelines and expectations?'" 
+                    inputType="textarea"/>
+
+                <div>
+                    <label class="mb-3" :for="appCharacteristics">Following is a short list of characteristics that can possibly make communal
+                        living difficult. Do any of these describe parts of your personality?</label>
+                    <div class="d-flex flex-wrap justify-content-between">
+                        <div v-for="(commChar, cIndex) in commChars" class="ms-2 mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" 
+                                :value="commChar" :id="commChar + charIndex" @click="addRemove(commChar)">
+                            <label class="form-check-label" :for="commChar + charIndex">{{ commChar }}</label>
+                        </div>
+                        <InputAndLabel v-model="appCharOther" class="d-flex align-items-center mx-2 gap-2" labelStr="Other:" inputType="text"/>
+                    </div>
+                </div>
+
+                <InputAndLabel v-model="appReservations" labelStr="What reservations/reluctance do you have about following the house rules, policies, 
+                    and procedures?" inputType="textarea"/>
+                <InputAndLabel v-model="appWhatShouldWeKnow" labelStr="Is there anything else you think we should know about you? Thistledown will
+                    consider all reasonable accommodations for residency" inputType="textarea"/>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+
+            <button class="btn btn-primary" @click="showModal = !showModal">Close me</button>
+            
+            <embed type="application/pdf" src="./docs/HousemateApplication.pdf" width="250" height="200"/>
+        </div>
+    </div>
+</template>
+
+<style scoped>
+.modalDarkBox{
+    display: none;
+}
+</style>

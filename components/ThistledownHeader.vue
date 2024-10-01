@@ -21,7 +21,7 @@ const showModal = ref(false)
             Apply now!
         </button>
 
-        <span>{{ showModal }}</span>
+        <span v-if="showModal">{{ showModal }}</span>
 
         <div class="col-1"></div>
     </div>
