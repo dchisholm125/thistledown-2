@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import FullScreenModal from '~/components/FullScreenModal.vue';
+defineProps<{
+    exportToPDF: Function
+}>()
 
 useHead({
   titleTemplate: (titleChunk) => {

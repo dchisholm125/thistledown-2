@@ -4,7 +4,7 @@ const showModal = ref(false)
 </script>
 
 <template>
-    <div class="d-flex bg-thistle-tan-drk align-items-center justify-content-between w-100 py-2 gap-2">
+    <div class="noprint d-flex bg-thistle-tan-drk align-items-center justify-content-between w-100 py-2 gap-2">
         <div class="col-1"></div>
 
         <div class="col d-flex ms-5 fs-5 fw-bold gap-2">
@@ -16,10 +16,10 @@ const showModal = ref(false)
             <a href="#join-us"><span>JOIN US</span></a>
         </div>
 
-        <button class="col-auto btn btn-success" type="button"
+        <NuxtLink class="col-auto btn btn-success" type="button" to="/About"
             @click="showModal = !showModal">
             Apply now!
-        </button>
+        </NuxtLink>
 
         <span v-if="showModal">{{ showModal }}</span>
 

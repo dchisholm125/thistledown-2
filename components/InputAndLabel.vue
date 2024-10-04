@@ -21,13 +21,13 @@ onMounted(() => {
     <label :for="staticTextInput" class="form-label">{{ labelStr }}</label>
     <div v-if="inputType == 'radio'">
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="textInput1" @click="textInput = true">
+            <input class="form-check-input" type="radio" :name="labelStr" :id="labelStr + '1'" @click="textInput = true">
             <label class="form-check-label" for="textInput1">
                 Yes
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="textInput2" @click="textInput = false">
+            <input class="form-check-input" type="radio" :name="labelStr" :id="labelStr + '2'" @click="textInput = false">
             <label class="form-check-label" for="textInput2">
                 No
             </label>
