@@ -16,6 +16,7 @@
     "html2pdf.js": "^0.10.2",
     "jspdf": "^2.5.2",
     "nuxt": "^3.13.2",
+    "twilio": "5.3.5",
     "vue": "latest"
   }
 }

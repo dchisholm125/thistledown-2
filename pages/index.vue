@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import FullScreenModal from '~/components/FullScreenModal.vue';
+
 defineProps<{
     exportToPDF: Function
 }>()
@@ -10,26 +11,32 @@ useHead({
   }
 })
 
+function sendMsg() {
+    useFetch('/api/sendMsg', {
+  query: { msgBody: 'give it a go!'}
+})
+}
+
 const showModal = defineModel<boolean>(false)
 
 </script>
 
 <template>
-
+<div class="d-flex flex-column w-100">
     <div class="d-flex">
         <img src="~/assets/thistledown-logo.svg" class="position-absolute h-0 w-0 border border-solid rounded img-fluid bg-opaque-white" 
             alt="About Us" width="700" height="500" loading="lazy" style="top: 15%; left: 15%;">
         <img class="img-fluid" src="~/assets/cate-bligh-rOjL1qsJ9vE-unsplash.jpg" />
     </div>
 
-    <button class="btn btn-primary" @click="showModal = !showModal">HEY!</button>
+    <button class="btn btn-primary" @click="sendMsg()">HEY!</button>
 
     <ThistledownHeader />
 
     <Content />
 
     <FullScreenModal v-model="showModal" />
-
+</div>
 </template>
 
 <style>
