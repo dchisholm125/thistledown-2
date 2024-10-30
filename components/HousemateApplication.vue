@@ -1,5 +1,20 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import jsPDF from 'jspdf'
+import html2pdf from 'html2pdf'
+
+const doc = new jsPDF()
+doc.text("Hello, world!", 10, 10)
+// doc.save("a4.pdf")
+
+function convertPDFToBase64(pdfFile: any) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsText(pdfFile);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });
+}
 
 defineProps<{
     exportToPDF: Function
@@ -62,12 +77,92 @@ const appWhatShouldWeKnow = defineModel<string>('appWhatShouldWeKnow')
 
 const commCharChoices = ref<string[]>([])
 
+const applicationObj = computed(() => {
+    return {
+        'Name': applicantName.value,
+        'Date': todaysDate.value,
+        'Address': applicantAddr.value,
+        'Phone #': applicantPhoneNum.value,
+        'Date of Birth': applicantDOB.value,
+        'Emergency Contact and Phone': appContactAndPhone.value,
+        'Next of kin, if different': applicantNextOfKin.value,
+        'How did you hear about us?': applicantHearOfUs.value,
+        'Name of program or facility': applicantProgram.value,
+        'Date you arrived or were admitted': applicantAdmitDate.value,
+        'Aftercare coordinator or DOC supervisor': applicantSupervisor.value,
+        'Coordinator/Supervisor Email address': appSupeEmail.value,
+        'Coordinator/Supervisor Phone #': appSupePhone.value,
+        'Have you ever been asked to leave a sober house or treatment center?': appLeaveHome.value,
+        'If so, what was the reason?': appLeaveReason.value,
+        'Have you ever been evicted?': appEvicted.value,
+        'If so, why?': appEvictWhy.value,
+        'When did you last use alcohol or illegal drugs?': appLastUse.value,
+        'Do you have any outstanding warrants, pending criminal charges or upcoming court dates?': appWarrants.value,
+        'Are you on probation, parole, or suspended sentence? Please explain': appProbation.value,
+        'Are you a convicted sex offender and/or required to register as a sex offender in any state?': appSexOffend.value,
+        'Do you have a history of violence?': appViolence.value,
+        'Please explain': appViolenceExplain.value,
+        'Are you currently subject to an order of protection (restraining order) by the court?': appRestrOrder.value,
+        'Please explain': appRestrExplain.value,
+        'Are you undergoing medication assisted treatment (MAT/MAR) such as methadone or suboxone?': appTreatment.value,
+        'Provider name and contact information': appTreatProvNamePhone.value,
+        'Please list any physician-prescribed medication': appMedication.value,
+        'Do you have any allergies?': appAllergiesExplain.value,
+        'Do you use a rescue inhaler or Epipen?': appInhalerExplain.value,
+        'Other than alcoholism and/or addiction, do you have any medical conditions or physical disabilities we should be aware of?': appMedConditions.value,
+        'Other than alcoholism and/or addiction, do you have any mental health issues or disabilities we should be aware of?': appMentalConditions.value,
+        'Have you been vaccinated against COVID-19?': appCovidVacc.value,
+        'Are you willing to be vaccinated?': appCovidWilling.value,
+        'Do you have medical insurance (in case of medical emergency)?': appMedicalIns.value,
+        'Policy name/number': appPolicyNameNum.value,
+        'Marital Status': applicantMarriage.value,
+        'Children?': applicantChildren.value,
+        'Please tell us about your current employment/volunteer/student status (where/hours/supervisor, etc.)': appEmployment.value,
+        'Do you have a valid driver’s license?': appDriverLic.value,
+        'Will you need parking?': appParking.value,
+        'If so, license number and state': appCarLicNum.value,
+        'Make/Model/VIN': appMakeModel.value,
+        'What is the biggest challenge you face in sustaining your recovery?': appRecoveryQues.value,
+        'How do you expect being a part of our home will help with your recovery?': appHowWeHelp.value,
+        'What personal qualities will you contribute to the mutual support we share in our home?': applicantQualities.value,
+        'Is there any reason you might have trouble following our home’s guidelines and expectations?': appTroubleWRules.value,
+        'Following is a short list of characteristics that can possibly make communal living difficult. Do any of these describe parts of your personality?': commCharChoices.value,
+        'Other': appCharOther.value,
+        'What reservations/reluctance do you have about following the house rules, policies, and procedures?': appReservations.value,
+        'Is there anything else you think we should know about you? Thistledown will consider all reasonable accommodations for residency': appWhatShouldWeKnow.value,
+    }
+})
+
 function addRemove(commChar: string) {
     commCharChoices.value.indexOf(commChar) < 0 ? commCharChoices.value.push(commChar) : commCharChoices.value.splice(commCharChoices.value.indexOf(commChar),1)
 }
 
 function generatePdf() {
     print()
+}
+
+function sendMsg() {
+    useFetch('/api/sendMsg', {
+        query: { msgBody: 'You have just received a new a Housemate Application:\n\n\tApplicant Name: ' + applicantName.value + '\n\t' + 'Phone #: ' 
+                + applicantPhoneNum.value + '\n\tCoordinator Email/Phone: ' + appSupeEmail.value + '/' + appSupePhone.value}
+    })
+}
+
+function printAndSendPDF() {
+    let strBuilder = ''
+
+    let entryArr = Object.entries(applicationObj.value)
+
+    entryArr.forEach(entry => strBuilder += entry[0] + ': ' + entry[1] + '\n')
+
+    console.log(strBuilder)
+
+    $fetch('/api/printAndSendPdf', {
+        query: { 
+            applicant: applicantName.value, 
+            text: strBuilder,
+        }
+    })
 }
 
 </script>
@@ -79,7 +174,7 @@ function generatePdf() {
             <div class="d-flex justify-content-around gap-2">
                 <div class="col mb-3">
                     <label for="nameInput" class="form-label">Name</label>
-                    <input v-model="applicantName" type="text" class="form-control" id="nameInput" aria-describedby="nameHelp">
+                    <input v-model="applicantName" type="text" class="form-control" id="nameInput" aria-describedby="nameHelp" required >
                     <!-- <div id="nameHelp" class="form-text">We'll never share your email with anyone else.</div> -->
                 </div>
                 <div class="col mb-3">
@@ -89,7 +184,7 @@ function generatePdf() {
             </div>
             <div class="col mb-3">
                 <label for="addrInput" class="form-label">Address</label>
-                <input v-model="applicantAddr" type="text" class="form-control" id="addrInput">
+                <input v-model="applicantAddr" type="text" class="form-control" id="addrInput" required >
 
             </div>
             <div class="d-flex justify-content-around gap-2">
@@ -166,8 +261,8 @@ function generatePdf() {
                 <div class="d-flex flex-wrap">
                     <div v-for="(commChar, cIndex) in commChars" class="ms-2 mb-3 form-check">
                         <input type="checkbox" class="form-check-input" 
-                            :value="commChar" :id="commChar + charIndex" @click="addRemove(commChar)">
-                        <label class="form-check-label" :for="commChar + charIndex">{{ commChar }}</label>
+                            :value="commChar" :id="commChar" @click="addRemove(commChar)" required>
+                        <label class="form-check-label" :for="commChar">{{ commChar }}</label>
                     </div>
                     <InputAndLabel v-model="appCharOther" class="d-flex align-items-center mx-2 gap-2" labelStr="Other:" inputType="text"/>
                 </div>
@@ -179,10 +274,17 @@ function generatePdf() {
                 consider all reasonable accommodations for residency" inputType="textarea"/>
 
             <div class="d-flex gap-2">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary" @click="sendMsg()" :disabled="false">Submit</button>
                 <button class="btn btn-primary" @click="showModal = !showModal">Close me</button>
-                <button class="btn btn-success" @click.prevent.stop="generatePdf()">Export to PDF</button>
+                <button class="btn btn-success" @click.prevent.stop="printAndSendPDF()">Send fake emial</button>
             </div>
         </form>
     </div>
 </template>
+
+<style scoped>
+input:invalid{
+    border-width: 2px;
+    border-color: red;
+}
+</style>

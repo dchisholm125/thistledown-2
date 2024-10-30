@@ -9,7 +9,7 @@ export default defineEventHandler((event) => {
     const client = twilio(accountSid, authToken);
     client.messages
         .create({
-            body: getQuery(event).msgBody,
+            body: getQuery(event).msgBody?.toString(),
             from: '+18446281026',
             to: '+17204468559'
         })

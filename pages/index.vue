@@ -11,12 +11,6 @@ useHead({
   }
 })
 
-function sendMsg() {
-    useFetch('/api/sendMsg', {
-  query: { msgBody: 'give it a go!'}
-})
-}
-
 const showModal = defineModel<boolean>(false)
 
 </script>
@@ -28,8 +22,6 @@ const showModal = defineModel<boolean>(false)
             alt="About Us" width="700" height="500" loading="lazy" style="top: 15%; left: 15%;">
         <img class="img-fluid" src="~/assets/cate-bligh-rOjL1qsJ9vE-unsplash.jpg" />
     </div>
-
-    <button class="btn btn-primary" @click="sendMsg()">HEY!</button>
 
     <ThistledownHeader />
 
