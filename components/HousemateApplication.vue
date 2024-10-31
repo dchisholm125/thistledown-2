@@ -7,6 +7,14 @@ const doc = new jsPDF()
 doc.text("Hello, world!", 10, 10)
 // doc.save("a4.pdf")
 
+const passesBasicCheck = computed(() => {
+    if(applicantName.value && applicantPhoneNum.value && applicantEmailAddr.value) {
+        return true
+    } else {
+        return false
+    }
+})
+
 function convertPDFToBase64(pdfFile: any) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -25,6 +33,7 @@ const showModal = defineModel<boolean>('showModal')
 const applicantName = defineModel<string>('applicantName')
 const todaysDate = ref<Date>(new Date(Date.now()))
 const applicantAddr = defineModel<string>('applicantAddr')
+const applicantEmailAddr = defineModel<string>('applicantEmailAddr')
 const applicantPhoneNum = defineModel<string>('applicantPhoneNum')
 const applicantDOB = defineModel<string>('applicantDOB')
 const appContactAndPhone = defineModel<string>('appContactAndPhone')
@@ -84,6 +93,7 @@ const applicationObj = computed(() => {
         'Address': applicantAddr.value,
         'Phone #': applicantPhoneNum.value,
         'Date of Birth': applicantDOB.value,
+        'Email Address': applicantEmailAddr.value,
         'Emergency Contact and Phone': appContactAndPhone.value,
         'Next of kin, if different': applicantNextOfKin.value,
         'How did you hear about us?': applicantHearOfUs.value,
@@ -142,9 +152,14 @@ function generatePdf() {
 }
 
 function sendMsg() {
+
+    let initialStr = '(Hey Derek L., it\'s Derek C! Just sending this to impress you) \n\n You have just received a new a Housemate Application:\n\n\tApplicant Name: ' + applicantName.value + '\n\t' + 'Phone #: ' 
+                     + applicantPhoneNum.value  + '\n\t' + 'Email Address: ' + applicantEmailAddr.value
+
+    let coordStr = appSupeEmail.value || appSupePhone.value ? '\n\tCoordinator Email/Phone: ' + appSupeEmail.value + '/' + appSupePhone.value : '' 
+
     useFetch('/api/sendMsg', {
-        query: { msgBody: 'You have just received a new a Housemate Application:\n\n\tApplicant Name: ' + applicantName.value + '\n\t' + 'Phone #: ' 
-                + applicantPhoneNum.value + '\n\tCoordinator Email/Phone: ' + appSupeEmail.value + '/' + appSupePhone.value}
+        query: { msgBody: initialStr + coordStr}
     })
 }
 
@@ -190,6 +205,11 @@ function printAndSendPDF() {
             <div class="d-flex justify-content-around gap-2">
                 <InputAndLabel v-model="applicantPhoneNum" class="col" labelStr="Phone Number" inputType="text"/>
                 <InputAndLabel v-model="applicantDOB" class="col" labelStr="Date of Birth" inputType="date"/>
+            </div>
+
+            <div class="col mb-3">
+                <label for="emailAddrInput" class="form-label">Email Address</label>
+                <input v-model="applicantEmailAddr" type="email" class="form-control" id="emailAddrInput" required >
             </div>
 
             <InputAndLabel v-model="appContactAndPhone" labelStr="Emergency Contact and Phone" inputType="textarea"/>
@@ -274,9 +294,10 @@ function printAndSendPDF() {
                 consider all reasonable accommodations for residency" inputType="textarea"/>
 
             <div class="d-flex gap-2">
-                <button type="submit" class="btn btn-primary" @click="sendMsg()" :disabled="false">Submit</button>
-                <button class="btn btn-primary" @click="showModal = !showModal">Close me</button>
-                <button class="btn btn-success" @click.prevent.stop="printAndSendPDF()">Send fake emial</button>
+                <!-- <button class="btn btn-danger"@click="sendMsg()" :disabled="!passesBasicCheck">Send to Derek L.</button> -->
+                <button type="submit" class="btn btn-primary" @click="sendMsg()" :disabled="true">Submit</button>
+                <button class="btn btn-danger" @click="showModal = !showModal" :disabled="true">Cancel</button>
+                <!-- <button class="btn btn-success" @click.prevent.stop="printAndSendPDF()" :disabled="false">Send fake emial</button> -->
             </div>
         </form>
     </div>
