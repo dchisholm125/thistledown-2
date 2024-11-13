@@ -19,7 +19,7 @@ export default defineEventHandler((event) => {
     
     const mailOptions = {
     from: "dchisholm125@gmail.com",
-    to: "derek.leclerc@gmail.com",
+    to: "dchisholm125@gmail.com",
     subject: "(TESTING!) New Housemate Application Received",
     text: "Hey Derek! This is a TEST email, sent dynamically via your new Thistledown website. The attached .txt file should be a summary of the"
          + " applicant's form (not as pretty as the website though, sorry. I\'ll be working on making it prettier though!",

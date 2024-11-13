@@ -16,12 +16,8 @@ const showModal = defineModel<boolean>(false)
 </script>
 
 <template>
-<div class="d-flex flex-column w-100">
-    <div class="d-flex">
-        <img src="~/assets/thistledown-logo.svg" class="position-absolute h-0 w-0 border border-solid rounded img-fluid bg-opaque-white" 
-            alt="About Us" width="700" height="500" loading="lazy" style="top: 15%; left: 15%;">
-        <img class="img-fluid" src="~/assets/cate-bligh-rOjL1qsJ9vE-unsplash.jpg" />
-    </div>
+<div class="vstack w-100">
+    <img class="img-fluid" src="~/assets/thistledown-plus-background.png" />
 
     <ThistledownHeader />
 
