@@ -28,7 +28,7 @@ defineProps<{
     exportToPDF: Function
 }>()
 
-const showModal = defineModel<boolean>('showModal')
+const showModal = defineModel('showModal')
 
 const applicantName = defineModel<string>('applicantName')
 const todaysDate = ref<Date>(new Date(Date.now()))
@@ -163,7 +163,7 @@ function sendMsg() {
     })
 }
 
-function printAndSendPDF() {
+function sendEmail() {
     let strBuilder = ''
 
     let entryArr = Object.entries(applicationObj.value)
@@ -172,7 +172,7 @@ function printAndSendPDF() {
 
     console.log(strBuilder)
 
-    $fetch('/api/printAndSendPdf', {
+    $fetch('/api/sendEmail', {
         query: { 
             applicant: applicantName.value, 
             text: strBuilder,
@@ -296,8 +296,8 @@ function printAndSendPDF() {
             <div class="d-flex gap-2">
                 <!-- <button class="btn btn-danger"@click="sendMsg()" :disabled="!passesBasicCheck">Send to Derek L.</button> -->
                 <button type="submit" class="btn btn-primary" @click="sendMsg()" :disabled="true">Submit</button>
-                <button class="btn btn-danger" @click="showModal = !showModal" :disabled="true">Cancel</button>
-                <!-- <button class="btn btn-success" @click.prevent.stop="printAndSendPDF()" :disabled="false">Send fake emial</button> -->
+                <button class="btn btn-danger" @click="showModal = !showModal">Cancel</button>
+                <button class="btn btn-success" @click.prevent.stop="sendEmail()" :disabled="false">Send fake emial</button>
             </div>
         </form>
     </div>

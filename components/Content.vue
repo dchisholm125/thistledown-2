@@ -79,18 +79,18 @@ const contentSections = ref([
 
         <hr class="mt-5"/>
 
-    <div class="d-flex flex-column align-items-center justify-content-center w-100">
+    <div class="d-flex flex-column align-items-center justify-content-center w-100" id="amenities">
         <h1 class="display-5 fw-bold text-body-emphasis lh-1 mt-4 mb-5">House amenities</h1>
         <ul class="list-group list-group-flush fs-4 gap-1 text-center ">
-            <li class="list-group-item">Single and double occupancy bedrooms</li>
-            <li class="list-group-item">Twin bed, bedding, and personal dresser</li>
-            <li class="list-group-item">Washer and dryer on-site</li>
-            <li class="list-group-item">Cable television, free wi-fi</li>
-            <li class="list-group-item">Full kitchen and multiple refrigerators</li>
-            <li class="list-group-item">3 full bathrooms</li>
-            <li class="list-group-item">Outdoor communal space and smoking area</li>
-            <li class="list-group-item">Storage space for bicycles or motor vehicles</li>
-            <li class="list-group-item">Parking on-site</li>
+            <li class="list-group-item"><span class="animate">Single and double occupancy bedrooms</span></li>
+            <li class="list-group-item"><span class="animate">Twin bed, bedding, and personal dresser</span></li>
+            <li class="list-group-item"><span class="animate">Washer and dryer on-site</span></li>
+            <li class="list-group-item"><span class="animate">Cable television, free wi-fi</span></li>
+            <li class="list-group-item"><span class="animate">Full kitchen and multiple refrigerators</span></li>
+            <li class="list-group-item"><span class="animate">3 full bathrooms</span></li>
+            <li class="list-group-item"><span class="animate">Outdoor communal space and smoking area</span></li>
+            <li class="list-group-item"><span class="animate">Storage space for bicycles or motor vehicles</span></li>
+            <li class="list-group-item"><span class="animate">Parking on-site</span></li>
         </ul>
     </div>
 
@@ -117,7 +117,11 @@ const contentSections = ref([
 
 <style scoped>
 
-li:hover{
+li {
+    padding: 5px;
+}
+
+.animate:hover{
     animation: 0.5s linear fadeIn;
     color: blue;
     background-color: rgba(0, 0, 0, 0.048);

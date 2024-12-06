@@ -16,15 +16,9 @@ const showModal = defineModel<boolean>(false)
 </script>
 
 <template>
-<div class="vstack w-100">
-    <img class="img-fluid" src="~/assets/thistledown-plus-background.png" />
-
-    <ThistledownHeader />
 
     <Content />
 
-    <FullScreenModal v-model="showModal" />
-</div>
 </template>
 
 <style>
