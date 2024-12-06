@@ -28,6 +28,20 @@ const showModal = defineModel<boolean>(false)
 </template>
 
 <style>
+@keyframes fadeIn {
+    0% {
+        background-color: rgba(0, 0, 0, 0);
+        font-size: 18pt;
+        color: black;
+    }
+    100% {
+        background-color: rgba(0, 0, 0, 0.048);
+        border-radius: 10px;
+        font-size: 19pt;
+        color: blue;
+    }
+}
+
 .banner-height {
     height: 80vh;
 }

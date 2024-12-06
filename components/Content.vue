@@ -79,6 +79,23 @@ const contentSections = ref([
 
         <hr class="mt-5"/>
 
+    <div class="d-flex flex-column align-items-center justify-content-center w-100">
+        <h1 class="display-5 fw-bold text-body-emphasis lh-1 mt-4 mb-5">House amenities</h1>
+        <ul class="list-group list-group-flush fs-4 gap-1 text-center ">
+            <li class="list-group-item">Single and double occupancy bedrooms</li>
+            <li class="list-group-item">Twin bed, bedding, and personal dresser</li>
+            <li class="list-group-item">Washer and dryer on-site</li>
+            <li class="list-group-item">Cable television, free wi-fi</li>
+            <li class="list-group-item">Full kitchen and multiple refrigerators</li>
+            <li class="list-group-item">3 full bathrooms</li>
+            <li class="list-group-item">Outdoor communal space and smoking area</li>
+            <li class="list-group-item">Storage space for bicycles or motor vehicles</li>
+            <li class="list-group-item">Parking on-site</li>
+        </ul>
+    </div>
+
+    <hr class="mt-5"/>
+
         <div class="container col-xxl-8 px-4 py-5">
             <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
                 <div class="col justify-content-center text-center">
@@ -97,3 +114,14 @@ const contentSections = ref([
         </div>
     </div>
 </template>
+
+<style scoped>
+
+li:hover{
+    animation: 0.5s linear fadeIn;
+    color: blue;
+    background-color: rgba(0, 0, 0, 0.048);
+    border-radius: 10px;
+    font-size: 19pt;
+}
+</style>

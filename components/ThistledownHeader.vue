@@ -16,13 +16,28 @@ const showModal = ref(false)
             <a href="#join-us"><span>JOIN US</span></a>
         </div>
 
-        <NuxtLink class="col-auto btn btn-success" type="button" to="/About"
+        <NuxtLink type="button" to="/About"
             @click="showModal = !showModal">
-            Apply now!
+            <button class="btn btn-success">Apply now!</button>
         </NuxtLink>
-
-        <span v-if="showModal">{{ showModal }}</span>
 
         <div class="col-1"></div>
     </div>
 </template>
+
+<style scoped>
+@keyframes aFadeIn {
+    0% {
+        background-color: #dbe4cf;
+        color: black;
+    }
+    100% {
+        background-color: rgba(196, 184, 155, 0.829);
+        border-radius: 10px;
+    }
+}
+
+a:hover {
+    animation: 0.3s linear aFadeIn;
+}
+</style>
