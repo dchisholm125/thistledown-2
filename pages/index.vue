@@ -1,24 +1,10 @@
 <script setup lang="ts">
-import FullScreenModal from '~/components/FullScreenModal.vue';
-
-defineProps<{
-    exportToPDF: Function
-}>()
-
-useHead({
-  titleTemplate: (titleChunk) => {
-    return 'Thistledown Recovery Home';
-  }
-})
-
-const showModal = defineModel<boolean>(false)
+const showModal = defineModel()
 
 </script>
 
 <template>
-
-    <Content />
-
+    <Content v-model="showModal" />
 </template>
 
 <style>

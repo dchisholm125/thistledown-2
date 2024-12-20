@@ -24,10 +24,6 @@ function convertPDFToBase64(pdfFile: any) {
   });
 }
 
-defineProps<{
-    exportToPDF: Function
-}>()
-
 const showModal = defineModel('showModal')
 
 const applicantName = defineModel<string>('applicantName')
@@ -153,9 +149,10 @@ function generatePdf() {
 
 function sendMsg() {
 
-    let initialStr = '(Hey Derek L., it\'s Derek C! Just sending this to impress you) \n\n You have just received a new a Housemate Application:\n\n\tApplicant Name: ' + applicantName.value + '\n\t' + 'Phone #: ' 
+    let initialStr = 'You have just received a new a Housemate Application:\n\n\tApplicant Name: ' + applicantName.value + '\n\t' + 'Phone #: ' 
                      + applicantPhoneNum.value  + '\n\t' + 'Email Address: ' + applicantEmailAddr.value
 
+    //IF they are there, give them this.
     let coordStr = appSupeEmail.value || appSupePhone.value ? '\n\tCoordinator Email/Phone: ' + appSupeEmail.value + '/' + appSupePhone.value : '' 
 
     useFetch('/api/sendMsg', {
@@ -296,7 +293,7 @@ function sendEmail() {
             <div class="d-flex gap-2">
                 <!-- <button class="btn btn-danger"@click="sendMsg()" :disabled="!passesBasicCheck">Send to Derek L.</button> -->
                 <button type="submit" class="btn btn-primary" @click="sendMsg()" :disabled="true">Submit</button>
-                <button class="btn btn-danger" @click="showModal = !showModal">Cancel</button>
+                <button class="btn btn-danger" @click="showModal = false">Cancel</button>
                 <button class="btn btn-success" @click.prevent.stop="sendEmail()" :disabled="false">Send fake emial</button>
             </div>
         </form>

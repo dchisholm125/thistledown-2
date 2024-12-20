@@ -1,20 +1,36 @@
 <script setup lang="ts">
+import { onClickOutside, useMouseInElement } from '@vueuse/core'
 import { ref } from 'vue'
 
+defineProps<{
+    caller: string,
+}>()
+
 const showModal = defineModel()
+
+const matteEl = ref()
+
+const { isOutside } = useMouseInElement(matteEl)
 
 </script>
 
 <template>
-    <div v-if="showModal" 
-    class="noprint position-absolute d-flex top-0 left-0 z-3 text-white justify-content-center align-items-center bg-opaque-black" 
-        style="height: 100vh; width: 100vw" id="modalDarkBox">
-        <div class="noprint d-flex flex-column justify-content-center align-items-center bg-thistle-tan text-black w-75 opacity-100" id="modalMatte"
-            style="background-color: #afafaf; max-height: 90vh;">
-            
-            <HousemateApplication v-model:showModal="showModal"/>
-            
-            <!-- <embed type="application/pdf" src="./docs/HousemateApplication.pdf" width="250" height="200"/> -->
+    <div style="position: sticky; top: 0; z-index: 2;">
+        <div v-if="showModal" 
+            class="noprint position-absolute d-flex top-0 left-0 z-3 text-white justify-content-center align-items-center bg-opaque-black" 
+            style="height: 100vh; width: 100vw" id="modalDarkBox"
+            @click="showModal = isOutside ? false : showModal"
+                >
+            <div
+                ref="matteEl" 
+                class="noprint d-flex flex-column justify-content-center align-items-center bg-thistle-tan text-black w-75 opacity-100" id="modalMatte"
+                style="background-color: #afafaf; max-height: 90vh;">
+
+                <HousemateApplication v-if="caller == 'apply'" v-model:showModal="showModal"/>
+
+                <RequestInfo v-else />
+
+            </div>
         </div>
     </div>
 </template>

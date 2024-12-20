@@ -1,4 +1,9 @@
 <script setup lang="ts">
+import BedDouble from '@/assets/bed-double.svg'
+import Door from '@/assets/door.svg'
+
+const showModal = defineModel()
+const caller = inject('caller')
 
 const contentSections = ref([
     {
@@ -77,13 +82,50 @@ const contentSections = ref([
         :boldCallout="section.boldCallout"
             />
 
-        <hr class="mt-5"/>
+    <hr class="mt-5"/>
+
+    <div class="d-flex align-self-center">
+        <div class="col d-flex flex-column">
+            <div class="col p-2">
+                <AmenityCard :icon="Door" text="Single and double occupancy bedrooms"/>
+            </div>
+            <div class="col p-2">
+                <AmenityCard :icon="BedDouble" text="Twin bed, bedding, and personal dresser"/>
+            </div>
+            <div class="col p-2">
+                <AmenityCard :icon="icon" text="Washer and dryer on-site"/>
+            </div>
+            <div class="col p-2">
+                <AmenityCard :icon="icon" text="Cable television, free wi-fi"/>
+            </div>
+            <div class="col p-2">
+                <AmenityCard :icon="icon" text="Parking on-site"/>
+            </div>
+        </div>
+        <div class="col d-flex flex-column">
+            <div class="col p-2">
+                <AmenityCard :icon="icon" text="Full kitchen and multiple refrigerators"/>
+            </div>
+            <div class="col p-2">
+                <AmenityCard :icon="icon" text="3 full bathrooms"/>
+            </div>
+            <div class="col p-2">
+                <AmenityCard :icon="icon" text="Outdoor communal space and smoking area"/>
+            </div>
+            <div class="col p-2">
+                <AmenityCard :icon="icon" text="Storage space for bicycles or motor vehicles"/>
+            </div>
+            <div class="col p-2">
+                <!-- intentionally empty for symmetry -->
+            </div>
+        </div>
+    </div>
 
     <div class="d-flex flex-column align-items-center justify-content-center w-100" id="amenities">
         <h1 class="display-5 fw-bold text-body-emphasis lh-1 mt-4 mb-5">House amenities</h1>
         <ul class="list-group list-group-flush fs-4 gap-1 text-center ">
-            <li class="list-group-item"><span class="animate">Single and double occupancy bedrooms</span></li>
-            <li class="list-group-item"><span class="animate">Twin bed, bedding, and personal dresser</span></li>
+            <div class="list-group-item"><span class="animate">Single and double occupancy bedrooms</span></div>
+            <div class="list-group-item"><span class="animate">Twin bed, bedding, and personal dresser</span></div>
             <li class="list-group-item"><span class="animate">Washer and dryer on-site</span></li>
             <li class="list-group-item"><span class="animate">Cable television, free wi-fi</span></li>
             <li class="list-group-item"><span class="animate">Full kitchen and multiple refrigerators</span></li>
@@ -105,9 +147,9 @@ const contentSections = ref([
                         be the right fit. We invite you to learn more about our home and how we
                         can be a part of your recovery journey. Please contact us for more
                         information or to schedule a visit.</p>
-                    <div>
-                        <button type="button" class="btn btn-primary btn-lg px-4 me-md-2">Primary</button>
-                        <button type="button" class="btn btn-outline-secondary btn-lg px-4">Default</button>
+                    <div class="d-lg-flex d-none justify-content-center">
+                        <button type="button" class="btn btn-primary btn-lg px-4 me-md-2" @click="showModal = !showModal; caller = 'info';">Request Info</button>
+                        <button type="button" class="btn btn-success btn-lg px-4" @click="showModal = !showModal; caller = 'apply';">Apply Now!</button>
                     </div>
                 </div>
             </div>
