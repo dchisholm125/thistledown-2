@@ -17,8 +17,6 @@ provide('caller', caller)
       <img class="img-fluid" src="~/assets/thistledown-plus-background.png" />
 
       <ThistledownHeader v-model="showModal" />
-  {{ caller }} = caller
-
 
       <NuxtPage v-model="showModal" id="main"/>
   </div>
