@@ -29,7 +29,7 @@ const compHtmlId = computed(() => {
 
 <template>
   <div :id="compHtmlId" class="d-flex flex-column flex-lg-row m-0 p-0 align-items-center">
-    <img v-if="!imgAfterText || windowWidth < 992" ref="imgEl" :src="props.imgSrc" class="col-12 col-lg-6 img-fluid" 
+    <img v-if="!imgAfterText || windowWidth < 992" ref="imgEl" :src="props.imgSrc" class="col-12 col-lg-6 img-fluid"
       :alt="props.sectionName" loading="lazy">
     <div class="col-12 col-lg-6 d-flex flex-column justify-content-evenly py-3 py-lg-0 px-5" :style="windowWidth > 992 ? 'height: ' + imgSizeHeight + 'px' : ''">
       <p v-if="boldCallout" class="display-6 font-skinny text-nowrap overflow-elipsis">{{ boldCallout}}</p>
@@ -37,6 +37,12 @@ const compHtmlId = computed(() => {
       <p class="display-2">{{ sectionName }}</p>
       <p class="lead text-wrap overflow-auto">{{ sectionContent }}</p>
     </div>
-    <img v-if="imgAfterText && windowWidth >= 992" ref="imgEl" :src="props.imgSrc" class="col-12 col-lg-6 img-fluid" :alt="props.sectionName" loading="lazy">
+    <img v-if="imgAfterText && windowWidth >= 992" ref="imgEl" :src="props.imgSrc" class="col-12 col-lg-6 img-fluid" style="max-height: 60vh;" :alt="props.sectionName" loading="lazy">
   </div>
 </template>
+
+<style scoped>
+img {
+  object-fit: cover;
+}
+</style>

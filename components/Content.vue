@@ -26,7 +26,7 @@ const contentSections = ref([
                     + "sobriety. Our goal is to facilitate a space where residents can focus on their "
                     + "recovery without the distractions and triggers of their previous living "
                     + "situations.",
-        imgSrc: "/kalen-emsley-4mHZqgoZQu8-unsplash.jpg",
+        imgSrc: "/jenn-buxton-iURt8NSVcXI-unsplash.jpg",
     },
     {
         sectionName: "Our Home",
