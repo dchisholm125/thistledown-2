@@ -74,6 +74,7 @@ const contentSections = ref([
 <template>
 <div class="d-flex flex-column">
     <ContentBlock v-for="(section, index) in contentSections" 
+        :key="section.sectionName"
         :imgAfterText="index % 2 > 0"
         :sectionName="section.sectionName"
         :sectionContent="section.sectionContent"
@@ -84,6 +85,8 @@ const contentSections = ref([
 
     <hr class="mt-5"/>
 
+    <h1 class="display-5 fw-bold text-body-emphasis text-center lh-1 mt-4 mb-5">House amenities</h1>
+    
     <div class="d-flex align-self-center">
         <div class="col d-flex flex-column">
             <div class="col p-2">
@@ -121,7 +124,7 @@ const contentSections = ref([
         </div>
     </div>
 
-    <div class="d-flex flex-column align-items-center justify-content-center w-100" id="amenities">
+    <!-- <div class="d-flex flex-column align-items-center justify-content-center w-100" id="amenities">
         <h1 class="display-5 fw-bold text-body-emphasis lh-1 mt-4 mb-5">House amenities</h1>
         <ul class="list-group list-group-flush fs-4 gap-1 text-center ">
             <div class="list-group-item"><span class="animate">Single and double occupancy bedrooms</span></div>
@@ -134,7 +137,7 @@ const contentSections = ref([
             <li class="list-group-item"><span class="animate">Storage space for bicycles or motor vehicles</span></li>
             <li class="list-group-item"><span class="animate">Parking on-site</span></li>
         </ul>
-    </div>
+    </div> -->
 
     <hr class="mt-5"/>
 

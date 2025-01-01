@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import html2pdf from "html2pdf";
-
 const showModal = ref(false)
 
 const caller = ref('')

@@ -13,7 +13,7 @@ const props = defineProps<{
 const { width: windowWidth } = useWindowSize()
 
 const imgEl = ref()
-const { height: imgSizeHeight } = useElementSize(imgEl)
+const imgSizeHeight = ref()
 
 const compHtmlId = computed(() => {
   let buildStr = ''
@@ -23,6 +23,10 @@ const compHtmlId = computed(() => {
   }
 
   return buildStr
+})
+
+onMounted(() => {
+  imgSizeHeight.value = useElementSize(imgEl).height
 })
 
 </script>
