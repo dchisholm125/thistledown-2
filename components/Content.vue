@@ -15,7 +15,6 @@ const contentSections = ref([
                     + "sense of community among residents who are on a shared journey towards "
                     + "lasting recovery.",
         imgSrc: "/matheus-ferrero-TkrRvwxjb_8-unsplash.jpg",
-        sectionBlurb: "Gateway to Recovery", 
     },
     {
         sectionName: "Our Mission",
@@ -37,7 +36,6 @@ const contentSections = ref([
                         + "maintaining a clean and orderly home to ensure a conducive atmosphere "
                         + "for recovery.",
         imgSrc: "/luke-stackpoole-eWqOgJ-lfiI-unsplash.jpg",
-        sectionBlurb: "Gateway to Recovery", 
         boldCallout: "CONWAY, NH", 
     },
     {
