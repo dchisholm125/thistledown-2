@@ -15,7 +15,7 @@ const caller = inject('caller')
                 <a href="#our-home"><span>OUR HOME</span></a>
                 <a href="#our-community"><span>OUR COMMUNITY</span></a>
                 <a href="#our-approach"><span>OUR APPROACH</span></a>
-                <a href="#amenities"><span>HOUSE AMENITIES</span></a>
+                <a href="#house-amenities"><span>HOUSE AMENITIES</span></a>
                 <!-- <a href="#join-us"><span>JOIN US</span></a> -->
             </div>
 

@@ -19,7 +19,7 @@ provide('caller', caller)
       <NuxtPage v-model="showModal" id="main"/>
   </div>
 
-  <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 px-5 border-top">
+  <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 mt-3 mb-2 px-5 border-top" style="background-color: #dbe4cf;">
     <div class="col-md-4 d-flex align-items-center">
       <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
         <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
@@ -33,9 +33,9 @@ provide('caller', caller)
     </div>
 
     <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-      <li class="ms-3"><a class="text-body-secondary p-3" href="https://www.twitter.com/"><img src="/assets/twitter.svg" height="24" width="24"></a></li>
-      <li class="ms-3"><a class="text-body-secondary p-3" href="https://www.instagram.com/"><img src="/assets/instagram.svg" height="24" width="24"></a></li>
-      <li class="ms-3"><a class="text-body-secondary p-3" href="https://www.facebook.com/"><img src="/assets/facebook.svg" height="24" width="24"></a></li>
+      <li class="ms-3"></li>
+      <li class="ms-3"></li>
+      <li class="ms-3"></li>
     </ul>
   </footer>
 </template>
