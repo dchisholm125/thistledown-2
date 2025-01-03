@@ -7,10 +7,9 @@ const caller = inject('caller')
 
 <template>
     <div style="position: sticky; top: 0; z-index: 1;">
-        <div class="noprint d-flex bg-thistle-tan-drk align-items-center justify-content-between w-100 py-2 gap-2 overflow-hidden">
-            <div class="col-1"></div>
+        <div class="noprint d-flex bg-thistle-light-gray align-items-center justify-content-center w-100 py-2 gap-2 overflow-hidden">
 
-            <div class="col d-lg-flex d-none align-items-center justify-content-between fw-bold text-nowrap gap-2" style="font-size: 1.25rem;">
+            <div class="col d-lg-flex d-none align-items-center justify-content-evenly fw-bold text-nowrap gap-2 text-charcoal" style="font-size: 1.25rem;">
                 <a href="#about-us"><span>ABOUT US</span></a>
                 <a href="#our-mission"><span>OUR MISSION</span></a>
                 <a href="#our-home"><span>OUR HOME</span></a>
@@ -20,9 +19,12 @@ const caller = inject('caller')
                 <!-- <a href="#join-us"><span>JOIN US</span></a> -->
             </div>
 
-            <div class="d-flex justify-content-evenly gap-3">
-                <button class="btn btn-primary text-nowrap" @click="showModal = !showModal; caller = 'info';">Request Info</button>
-                <button class="btn btn-success text-nowrap" @click="showModal = !showModal; caller = 'apply';">Apply now!</button>
+
+            <div class="col-1 d-flex justify-content-evenly gap-3">
+                <!-- change bootstrap SCSS -->
+                <button class="btn btn-dark text-nowrap" @click="showModal = !showModal; caller = 'info';">Request Info</button>
+                <button class="btn btn-success text-nowrap" @click="showModal = !showModal; caller = 'apply';">Apply Now</button>
+                <!-- change bootstrap SCSS -->
             </div>
 
             <div class="col-1"></div>
@@ -44,5 +46,9 @@ const caller = inject('caller')
 
 a:hover {
     animation: 0.3s linear aFadeIn;
+}
+
+.btn {
+    @include btn-variant(@2e3f46);
 }
 </style>

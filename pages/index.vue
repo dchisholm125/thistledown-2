@@ -4,7 +4,7 @@ const showModal = defineModel()
 </script>
 
 <template>
-    <Content v-model="showModal" />
+    <Content v-model="showModal"/>
 </template>
 
 <style>
@@ -34,12 +34,17 @@ const showModal = defineModel()
     background-color: rgba(255, 255, 255, 0.75);
 }
 
-.bg-thistle-tan {
-    background-color: white;
+.bg-thistle-ultralight-grey {
+    background-color: #ecebe4;
 }
 
 .bg-thistle-tan-drk {
     background-color: #dbe4cf;
+}
+
+.bg-thistle-light-gray {
+    background-color: #d9d5cd;
+
 }
 
 .bg-heros {
@@ -52,6 +57,19 @@ const showModal = defineModel()
 
 .text-thistledown {
     color: #545454;
+}
+
+.text-charcoal {
+    color: #242525;
+    font-weight: bold;
+}
+
+.font-libre {
+  font-family: 'Libre Baskerville';
+}
+
+.font-lato {
+  font-family: 'Lato';
 }
 
 a {

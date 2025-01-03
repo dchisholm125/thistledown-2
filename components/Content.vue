@@ -1,6 +1,20 @@
 <script setup lang="ts">
-import BedDouble from '@/assets/bed-double.svg'
-import Door from '@/assets/door.svg'
+import Bike from '@/assets/bicycle-3-svgrepo-com.svg'
+import CableTV from '@/assets/wifi-svgrepo-com.svg'
+import Bathroom from '@/assets/Full Bathroom.svg'
+import Kitchen from '@/assets/full kitchen.svg'
+import OutdoorSpace from '@/assets/Outdoor communal space.svg'
+import Beds from '@/assets/Twin Bed.svg'
+import WasherDryer from '@/assets/Washer and Dryer On-site.svg'
+import Parking from '@/assets/parking-svgrepo-com.svg'
+import SingleDouble from '@/assets/Single and double.svg'
+
+import AboutUsPhoto from '@/assets/AboutUsPhoto.jpeg'
+import HouseAmenPhoto from '@/assets/House Amenities.jpeg'
+import MissionPhoto from '@/assets/Our Mission.jpeg'
+import HomePhoto from '@/assets/Our Home.jpeg'
+import CommunityPhoto from '@/assets/Our Community.jpeg'
+import ApproachPhoto from '@/assets/Our Approach.jpeg'
 
 const showModal = defineModel()
 const caller = inject('caller')
@@ -14,7 +28,7 @@ const contentSections = ref([
                     + "structured living space that fosters personal growth, accountability, and a "
                     + "sense of community among residents who are on a shared journey towards "
                     + "lasting recovery.",
-        imgSrc: "/matheus-ferrero-TkrRvwxjb_8-unsplash.jpg",
+        imgSrc: AboutUsPhoto,
     },
     {
         sectionName: "Our Mission",
@@ -25,7 +39,7 @@ const contentSections = ref([
                     + "sobriety. Our goal is to facilitate a space where residents can focus on their "
                     + "recovery without the distractions and triggers of their previous living "
                     + "situations.",
-        imgSrc: "/jenn-buxton-iURt8NSVcXI-unsplash.jpg",
+        imgSrc: MissionPhoto,
     },
     {
         sectionName: "Our Home",
@@ -35,7 +49,7 @@ const contentSections = ref([
                         + "amenities that cater to the needs of our residents. We take pride in "
                         + "maintaining a clean and orderly home to ensure a conducive atmosphere "
                         + "for recovery.",
-        imgSrc: "/luke-stackpoole-eWqOgJ-lfiI-unsplash.jpg",
+        imgSrc: HomePhoto,
         boldCallout: "CONWAY, NH", 
     },
     {
@@ -47,7 +61,7 @@ const contentSections = ref([
                         + "personal bicycles on property and a local taxi service is available for "
                         + "transportation needs, ensuring everyone has easy access to reliable travel "
                         + "to and from their place of employment.",
-        imgSrc: "/johannes-plenio-RwHv7LgeC7s-unsplash.jpg",
+        imgSrc: CommunityPhoto,
     },
     {
         sectionName: "Our Approach",
@@ -63,7 +77,7 @@ const contentSections = ref([
                         + "sobriety. We believe in the power of community and peer support, and our "
                         + "home serves as a foundation from which residents can build a fulfilling and "
                         + "sober life.",
-        imgSrc: "/gary-bendig-b30CHD9UdVs-unsplash.jpg",
+        imgSrc: ApproachPhoto,
     },
 ])
 
@@ -81,7 +95,50 @@ const contentSections = ref([
         :boldCallout="section.boldCallout"
             />
 
-    <hr class="mt-5"/>
+    <ContentBlock :imgAfterText="true" :imgSrc="HouseAmenPhoto">
+
+        <h5 class="display-2 font-libre lh-1 mt-4 mb-0">House Amenities</h5>
+
+        <hr class="mt-5"/>
+
+        <div class="d-flex align-self-center">
+            <div class="col d-flex flex-column">
+                <div class="col p-2">
+                    <AmenityCard :icon="SingleDouble" text="Single and double occupancy bedrooms"/>
+                </div>
+                <div class="col p-2">
+                    <AmenityCard :icon="Beds" text="Twin bed, bedding, and personal dresser"/>
+                </div>
+                <div class="col p-2">
+                    <AmenityCard :icon="WasherDryer" text="Washer and dryer on-site"/>
+                </div>
+                <div class="col p-2">
+                    <AmenityCard :icon="CableTV" text="Cable television, free wi-fi"/>
+                </div>
+                <div class="col p-2">
+                    <AmenityCard :icon="Parking" text="Parking on-site"/>
+                </div>
+            </div>
+            <div class="col d-flex flex-column">
+                <div class="col p-2">
+                    <AmenityCard :icon="Kitchen" text="Full kitchen and multiple refrigerators"/>
+                </div>
+                <div class="col p-2">
+                    <AmenityCard :icon="Bathroom" text="3 full bathrooms"/>
+                </div>
+                <div class="col p-2">
+                    <AmenityCard :icon="OutdoorSpace" text="Outdoor communal space and smoking area"/>
+                </div>
+                <div class="col p-2">
+                    <AmenityCard :icon="Bike" text="Storage space for bicycles or motor vehicles"/>
+                </div>
+                <div class="col p-2">
+                    <!-- intentionally empty for symmetry -->
+                </div>
+            </div>
+        </div>
+    </ContentBlock>
+    
 
     <h1 class="display-5 fw-bold text-body-emphasis text-center lh-1 mt-4 mb-5">House amenities</h1>
     
