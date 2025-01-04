@@ -165,6 +165,7 @@ function sendEmail() {
 <template>
     <div class="ms-4 pe-4 py-4 overflow-y-auto">
         <h2 class="text-center mb-4">New Housemate Application</h2>
+        <h6 class="text-center fst-italic fw-normal">* Please fill out all required fields (highlighted with a <span style="color: red;">red&nbsp;</span>border). We ask that you do your best to fill out all fields.</h6>
         <form class="bg-white p-4 border border-solid rounded" id="printarea">
             <div class="d-flex justify-content-around gap-2">
                 <div class="col mb-3">
@@ -279,9 +280,9 @@ function sendEmail() {
 
             <div class="d-flex gap-2">
                 <!-- <button class="btn btn-danger"@click="sendMsg()" :disabled="!passesBasicCheck">Send to Derek L.</button> -->
-                <button type="submit" class="btn btn-primary" @click="sendMsg()">Submit</button>
-                <button class="btn btn-danger" @click="showModal = false">Cancel</button>
-                <button class="btn btn-success" @click.prevent.stop="sendEmail()" :disabled="false">Send fake emial</button>
+                <button type="submit" class="btn btn-primary" @click="sendMsg()" disabled>Submit</button>
+                <button class="btn btn-danger" @click="showModal = false" disabled>Cancel</button>
+                <button class="btn btn-success" @click.prevent.stop="sendEmail()" :disabled="true">Send fake emial</button>
             </div>
         </form>
     </div>

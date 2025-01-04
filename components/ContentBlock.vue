@@ -51,11 +51,4 @@ img {
   object-fit: cover;
 }
 
-.font-libre {
-  font-family: 'Libre Baskerville';
-}
-
-.font-lato {
-  font-family: 'Lato';
-}
 </style>
