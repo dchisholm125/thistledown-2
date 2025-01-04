@@ -23,12 +23,12 @@ const { isOutside } = useMouseInElement(matteEl)
                 >
             <div
                 ref="matteEl" 
-                class="noprint d-flex flex-column justify-content-center align-items-center bg-thistle-tan text-black w-75 opacity-100" id="modalMatte"
-                style="background-color: #afafaf; max-height: 90vh;">
+                class="noprint d-flex flex-column justify-content-center align-items-center bg-thistle-ultralight-grey rounded text-black w-75 opacity-100" id="modalMatte"
+                style="max-height: 90vh;">
 
-                <HousemateApplication v-if="caller == 'apply'" v-model:showModal="showModal"/>
+                <HousemateApplication v-if="caller == 'apply'" v-model:showModal="showModal" />
 
-                <RequestInfo v-else />
+                <RequestInfo v-else v-model:showModal="showModal" />
 
             </div>
         </div>

@@ -84,117 +84,60 @@ const contentSections = ref([
 </script>
 
 <template>
-<div class="d-flex flex-column">
-    <ContentBlock v-for="(section, index) in contentSections" 
-        :key="section.sectionName"
-        :imgAfterText="index % 2 > 0"
-        :sectionName="section.sectionName"
-        :sectionContent="section.sectionContent"
-        :imgSrc="section.imgSrc"
-        :sectionBlurb="section.sectionBlurb"
-        :boldCallout="section.boldCallout"
-            />
+    <div class="d-flex flex-column bg-thistle-ultralight-grey">
+        <ContentBlock v-for="(section, index) in contentSections" 
+            :key="section.sectionName"
+            :imgAfterText="index % 2 > 0"
+            :sectionName="section.sectionName"
+            :sectionContent="section.sectionContent"
+            :imgSrc="section.imgSrc"
+            :boldCallout="section.boldCallout"
+                />
 
-    <ContentBlock :imgAfterText="true" :imgSrc="HouseAmenPhoto">
+        <ContentBlock :imgAfterText="true" :imgSrc="HouseAmenPhoto" sectionName="House Amenities">
 
-        <h5 class="display-2 font-libre lh-1 mt-4 mb-0">House Amenities</h5>
-
-        <hr class="mt-5"/>
-
-        <div class="d-flex align-self-center">
-            <div class="col d-flex flex-column">
-                <div class="col p-2">
-                    <AmenityCard :icon="SingleDouble" text="Single and double occupancy bedrooms"/>
-                </div>
-                <div class="col p-2">
-                    <AmenityCard :icon="Beds" text="Twin bed, bedding, and personal dresser"/>
-                </div>
-                <div class="col p-2">
-                    <AmenityCard :icon="WasherDryer" text="Washer and dryer on-site"/>
-                </div>
-                <div class="col p-2">
-                    <AmenityCard :icon="CableTV" text="Cable television, free wi-fi"/>
-                </div>
-                <div class="col p-2">
-                    <AmenityCard :icon="Parking" text="Parking on-site"/>
+            <div class="d-flex flex-column">
+                <hr />
+                <div class="d-flex align-self-center w-100">
+                    <div class="col d-flex flex-column">
+                        <div class="col">
+                            <AmenityCard :icon="SingleDouble" text="Single and double occupancy bedrooms"/>
+                        </div>
+                        <div class="col">
+                            <AmenityCard :icon="Beds" text="Twin bed, bedding, and personal dresser"/>
+                        </div>
+                        <div class="col">
+                            <AmenityCard :icon="WasherDryer" text="Washer and dryer on-site"/>
+                        </div>
+                        <div class="col">
+                            <AmenityCard :icon="CableTV" text="Cable television, free wi-fi"/>
+                        </div>
+                        <div class="col">
+                            <AmenityCard :icon="Parking" text="Parking on-site"/>
+                        </div>
+                    </div>
+                    <div class="col d-flex flex-column">
+                        <div class="col">
+                            <AmenityCard :icon="Kitchen" text="Full kitchen and multiple refrigerators"/>
+                        </div>
+                        <div class="col">
+                            <AmenityCard :icon="Bathroom" text="3 full bathrooms"/>
+                        </div>
+                        <div class="col">
+                            <AmenityCard :icon="OutdoorSpace" text="Outdoor communal space and smoking area"/>
+                        </div>
+                        <div class="col">
+                            <AmenityCard :icon="Bike" text="Storage space for bicycles or motor vehicles"/>
+                        </div>
+                        <div class="col">
+                            <!-- intentionally empty for symmetry -->
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col d-flex flex-column">
-                <div class="col p-2">
-                    <AmenityCard :icon="Kitchen" text="Full kitchen and multiple refrigerators"/>
-                </div>
-                <div class="col p-2">
-                    <AmenityCard :icon="Bathroom" text="3 full bathrooms"/>
-                </div>
-                <div class="col p-2">
-                    <AmenityCard :icon="OutdoorSpace" text="Outdoor communal space and smoking area"/>
-                </div>
-                <div class="col p-2">
-                    <AmenityCard :icon="Bike" text="Storage space for bicycles or motor vehicles"/>
-                </div>
-                <div class="col p-2">
-                    <!-- intentionally empty for symmetry -->
-                </div>
-            </div>
-        </div>
-    </ContentBlock>
+        </ContentBlock>
     
-
-    <h1 class="display-5 fw-bold text-body-emphasis text-center lh-1 mt-4 mb-5">House amenities</h1>
-    
-    <div class="d-flex align-self-center">
-        <div class="col d-flex flex-column">
-            <div class="col p-2">
-                <AmenityCard :icon="Door" text="Single and double occupancy bedrooms"/>
-            </div>
-            <div class="col p-2">
-                <AmenityCard :icon="BedDouble" text="Twin bed, bedding, and personal dresser"/>
-            </div>
-            <div class="col p-2">
-                <AmenityCard :icon="icon" text="Washer and dryer on-site"/>
-            </div>
-            <div class="col p-2">
-                <AmenityCard :icon="icon" text="Cable television, free wi-fi"/>
-            </div>
-            <div class="col p-2">
-                <AmenityCard :icon="icon" text="Parking on-site"/>
-            </div>
-        </div>
-        <div class="col d-flex flex-column">
-            <div class="col p-2">
-                <AmenityCard :icon="icon" text="Full kitchen and multiple refrigerators"/>
-            </div>
-            <div class="col p-2">
-                <AmenityCard :icon="icon" text="3 full bathrooms"/>
-            </div>
-            <div class="col p-2">
-                <AmenityCard :icon="icon" text="Outdoor communal space and smoking area"/>
-            </div>
-            <div class="col p-2">
-                <AmenityCard :icon="icon" text="Storage space for bicycles or motor vehicles"/>
-            </div>
-            <div class="col p-2">
-                <!-- intentionally empty for symmetry -->
-            </div>
-        </div>
-    </div>
-
-    <!-- <div class="d-flex flex-column align-items-center justify-content-center w-100" id="amenities">
-        <h1 class="display-5 fw-bold text-body-emphasis lh-1 mt-4 mb-5">House amenities</h1>
-        <ul class="list-group list-group-flush fs-4 gap-1 text-center ">
-            <div class="list-group-item"><span class="animate">Single and double occupancy bedrooms</span></div>
-            <div class="list-group-item"><span class="animate">Twin bed, bedding, and personal dresser</span></div>
-            <li class="list-group-item"><span class="animate">Washer and dryer on-site</span></li>
-            <li class="list-group-item"><span class="animate">Cable television, free wi-fi</span></li>
-            <li class="list-group-item"><span class="animate">Full kitchen and multiple refrigerators</span></li>
-            <li class="list-group-item"><span class="animate">3 full bathrooms</span></li>
-            <li class="list-group-item"><span class="animate">Outdoor communal space and smoking area</span></li>
-            <li class="list-group-item"><span class="animate">Storage space for bicycles or motor vehicles</span></li>
-            <li class="list-group-item"><span class="animate">Parking on-site</span></li>
-        </ul>
-    </div> -->
-
-    <hr class="mt-5"/>
+        <hr class="mx-4"/>
 
         <div class="container col-xxl-8 px-4 py-5">
             <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
