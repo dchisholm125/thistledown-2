@@ -13,7 +13,7 @@ import AboutUsPhoto from '@/assets/AboutUsPhoto.jpeg'
 import HouseAmenPhoto from '@/assets/House Amenities.jpeg'
 import MissionPhoto from '@/assets/Our Mission.jpeg'
 import HomePhoto from '@/assets/Our Home.jpeg'
-import CommunityPhoto from '@/assets/Our Community.jpeg'
+import CommunityPhoto from '@/assets/north_conway.jpg'
 import ApproachPhoto from '@/assets/Our Approach.jpeg'
 
 const showModal = defineModel()
