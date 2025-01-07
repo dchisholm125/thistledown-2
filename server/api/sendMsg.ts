@@ -11,7 +11,7 @@ export default defineEventHandler((event) => {
         .create({
             body: getQuery(event).msgBody?.toString(),
             from: '+18446281026',
-            to: '+17204468559, '
+            to: getQuery(event).phoneNum?.toString() + ', '
         })
         .then((message: any) => console.log(message.sid));
   });

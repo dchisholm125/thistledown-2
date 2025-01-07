@@ -5,7 +5,7 @@ const props = defineProps<{
     notRequired?: boolean, // comes in as TRUE, and forces required to be FALSE
 }>()
 
-const textInput = defineModel<string | boolean>()
+const textInput = defineModel<string | boolean | Date>()
 
 let staticTextInput = ref<string>()
 

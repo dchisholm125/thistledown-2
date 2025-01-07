@@ -10,7 +10,7 @@ const todaysDate = ref<Date>(new Date(Date.now()))
 const applicantAddr = defineModel<string>('applicantAddr')
 const applicantEmailAddr = defineModel<string>('applicantEmailAddr')
 const applicantPhoneNum = defineModel<string>('applicantPhoneNum')
-const applicantDOB = defineModel<string>('applicantDOB')
+const applicantDOB = defineModel<Date>('applicantDOB')
 const appContactAndPhone = defineModel<string>('appContactAndPhone')
 const applicantNextOfKin = defineModel<string>('applicantNextOfKin')
 const applicantHearOfUs = defineModel<string>('applicantHearOfUs')
@@ -66,7 +66,7 @@ const commCharChoices = ref<string[]>([])
 const applicationObj = computed(() => {
     return {
         'Name': applicantName.value,
-        'Date': todaysDate.value,
+        'Date': todaysDate.value.toDateString(),
         'Address': applicantAddr.value,
         'Phone #': applicantPhoneNum.value,
         'Date of Birth': applicantDOB.value,
@@ -135,7 +135,11 @@ function sendMsg() {
     let coordStr = appSupeEmail.value || appSupePhone.value ? '\n\tCoordinator Email/Phone: ' + appSupeEmail.value + '/' + appSupePhone.value : '' 
 
     useFetch('/api/sendMsg', {
-        query: { msgBody: initialStr + coordStr}
+        query: { msgBody: "Dear Stacey,\n\n" + initialStr + coordStr, phoneNum: '+17204468559'}
+    })
+
+    useFetch('/api/sendMsg', {
+        query: { msgBody: "Dear Derek,\n\n" + initialStr + coordStr, phoneNum: '+17204468559'}
     })
 }
 
@@ -155,6 +159,37 @@ function sendEmail() {
         }
     })
 }
+
+const fieldsFilled = computed(() => {
+    return (applicantName.value !== undefined && applicantName.value !== '') &&
+    (applicantEmailAddr.value !== undefined && applicantEmailAddr.value !== '') &&
+    (applicantPhoneNum.value !== undefined && applicantPhoneNum.value !== '') &&
+    (applicantDOB.value !== undefined && applicantDOB.value !== null) &&
+    (applicantHearOfUs.value !== undefined && applicantHearOfUs.value !== '') &&
+    (applicantProgram.value !== undefined && applicantProgram.value !== '') &&
+    (appLeaveHome.value !== undefined && appLeaveHome.value !== null) &&
+    (appEvicted.value !== undefined && appEvicted.value !== null) &&
+    (appLastUse.value !== undefined && appLastUse.value !== '') &&
+    (appWarrants.value !== undefined && appWarrants.value !== '') &&
+    (appProbation.value !== undefined && appProbation.value !== '') &&
+    (appSexOffend.value !== undefined && appSexOffend.value !== null) &&
+    (appViolence.value !== undefined && appViolence.value !== null) &&
+    (appRestrOrder.value !== undefined && appRestrOrder.value !== null) &&
+    (appTreatment.value !== undefined && appTreatment.value !== null) &&
+    (appAllergies.value !== undefined && appAllergies.value !== null) &&
+    (appInhaler.value !== undefined && appInhaler.value !== null) &&
+    (appMedConditions.value !== undefined && appMedConditions.value !== '') &&
+    (appMentalConditions.value !== undefined && appMentalConditions.value !== '') &&
+    (appMedicalIns.value !== undefined && appMedicalIns.value !== null) &&
+    (appDriverLic.value !== undefined && appDriverLic.value !== null) &&
+    (appParking.value !== undefined && appParking.value !== null) &&
+    (appRecoveryQues.value !== undefined && appRecoveryQues.value !== '') &&
+    (appHowWeHelp.value !== undefined && appHowWeHelp.value !== '') &&
+    (applicantQualities.value !== undefined && applicantQualities.value !== '') &&
+    (appReservations.value !== undefined && appReservations.value !== '') &&
+    (appWhatShouldWeKnow.value !== undefined && appWhatShouldWeKnow.value !== '') &&
+    (commCharChoices.value.length > 0 || ( appCharOther.value !== undefined && appCharOther.value !== null))
+})
 
 </script>
 
@@ -276,9 +311,8 @@ function sendEmail() {
 
             <div class="d-flex gap-2">
                 <!-- <button class="btn btn-danger"@click="sendMsg()" :disabled="!passesBasicCheck">Send to Derek L.</button> -->
-                <button type="submit" class="btn btn-primary">Submit</button>
-                <button class="btn btn-danger" @click="showModal = false">Cancel</button>
-                <button class="btn btn-success" @click.prevent.stop="clickedOnce = !clickedOnce" :disabled="false">Send fake emial</button>
+                <button type="submit" class="btn btn-primary" @click.prevent="clickedOnce = !clickedOnce; sendEmail(); sendMsg()" :disabled="!fieldsFilled">Submit</button>
+                <button class="btn btn-dark" @click="showModal = false">Cancel</button>
             </div>
         </form>
     </div>

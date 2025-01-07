@@ -20,15 +20,12 @@ export default defineEventHandler((event) => {
     const mailOptions = {
     from: "dchisholm125@gmail.com",
     to: "dchisholm125@gmail.com",
-    subject: "New Housemate Application Received: (" + queryProps.applicant + ')',
-    text: "Dear Stacey and Derek,\n\n A new application has been received from: " + queryProps.applicant
-         + "\n\n " + queryProps.text,
-    attachments: [
-        {
-        filename: queryProps.applicant + " - Housemate Application.txt",
-        content: queryProps.text, 
-        },
-    ],
+    subject: "New Information Request Received: (" + queryProps.applicant + ')',
+    text: "Dear Stacey and Derek,\n\n A new information request has been received from: \n" + queryProps.applicant
+         + "\n\n He has reached out because: \n\n" + queryProps.text
+         + "\n\nContact information is below: \n\n"
+         + `Phone #: ${queryProps.phoneNum}\n`
+         + `Email Address: ${queryProps.emailAddr}\n\n (sent via Derek C's gmail)`
     }
     
     transporter.sendMail(mailOptions, (error, info) => {

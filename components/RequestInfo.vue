@@ -3,6 +3,43 @@ const showModal = defineModel('showModal')
 
 const clickedOnce = ref<boolean>(true)
 
+const reqFName = defineModel('reqFName')
+const reqLName = defineModel('reqLName')
+const reqPhoneNum = defineModel('reqPhoneNum')
+const reqEmailAddr = defineModel('reqEmailAddr')
+const reqTextArea = defineModel<string>('reqTextArea')
+
+const fieldsFilled = computed(() => {
+    return reqFName.value !== undefined && reqPhoneNum.value !== undefined && reqEmailAddr.value !== undefined && reqTextArea.value !== undefined
+             && reqFName.value !== '' && reqPhoneNum.value !== '' && reqEmailAddr.value !== '' && reqTextArea.value !== ''
+})
+
+function sendEmail() {
+    $fetch('/api/sendReqInfo', {
+        query: { 
+            applicant: reqFName.value + (reqLName.value ? ' ' + reqLName.value : ''),
+            phoneNum: reqPhoneNum.value,
+            emailAddr: reqEmailAddr.value,
+            text: reqTextArea.value,
+        }
+    })
+}
+
+function sendMsg() {
+
+    $fetch('/api/sendMsg', {
+    query: { msgBody: 'Dear Stacey, \n\nYou have just received a new request for information from:\n\n\tApplicant Name: ' + reqFName.value + ' ' + reqLName.value + '\n\t' + 'Phone #: ' 
+                 + reqPhoneNum.value  + '\n\t' + 'Email Address: ' + reqEmailAddr.value  + '\n\n They have contacted because: \"' + reqTextArea.value + '\"',
+             phoneNum: '+17204468559'}
+    })
+
+    $fetch('/api/sendMsg', {
+        query: { msgBody: 'Dear Derek, \n\nYou have just received a new request for information from:\n\n\tApplicant Name: ' + reqFName.value + ' ' + reqLName.value + '\n\t' + 'Phone #: ' 
+                    + reqPhoneNum.value  + '\n\t' + 'Email Address: ' + reqEmailAddr.value  + '\n\n They have contacted because: \"' + reqTextArea.value + '\"',
+                phoneNum: '+17204468559'}
+    })
+}
+
 </script>
 
 <template>
@@ -14,27 +51,30 @@ const clickedOnce = ref<boolean>(true)
                 <form>
                     <div class="d-flex gap-3 mb-3">
                         <div class="col form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" required>
-                            <label for="floatingInput">First Name</label>
+                            <input v-model="reqFName" type="text" class="form-control" id="floatingFName" placeholder="John" required>
+                            <label for="floatingFName">First Name</label>
                         </div>
                         <div class="col form-floating">
-                            <input type="text" class="form-control" id="floatingPassword" placeholder="Password">
-                            <label for="floatingPassword">Last Name</label>
+                            <input v-model="reqLName" type="text" class="form-control" id="floatingLName" placeholder="Smith">
+                            <label for="floatingLName">Last Name</label>
                         </div>
                     </div>
                     <div class="form-floating">
-                            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" required>
-                            <label for="floatingPassword">Phone #</label>
+                            <input v-model="reqPhoneNum" type="number" class="form-control" id="floatingPhoneNum" placeholder="Password" required>
+                            <label for="floatingPhoneNum">Phone #</label>
                     </div>
                     <div class="form-floating my-4">
-                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" rows="18" style="height: 90%; max-height: 90%;" required></textarea>
+                            <input v-model="reqEmailAddr" type="password" class="form-control" id="floatingEmail" placeholder="Password" required>
+                            <label for="floatingEmail">Email Address</label>
+                    </div>
+                    <div class="form-floating my-4">
+                        <textarea v-model="reqTextArea" class="form-control" placeholder="Leave a comment here" id="floatingTextarea" rows="18" style="height: 90%; max-height: 90%;" required></textarea>
                         <label for="floatingTextarea">Let us know how we can help</label>
                     </div>
                     <div class="d-flex gap-2">
                         <!-- <button class="btn btn-danger"@click="sendMsg()" :disabled="!passesBasicCheck">Send to Derek L.</button> -->
-                        <button type="submit" class="btn btn-primary" @click="clickedOnce = true">Submit</button>
-                        <button class="btn btn-danger" @click="showModal = false">Cancel</button>
-                        <button class="btn btn-success" @click.prevent.stop="clickedOnce = !clickedOnce" :disabled="false">Send fake emial</button>
+                        <button class="btn btn-primary" @click.prevent.stop="clickedOnce = !clickedOnce; sendEmail(); sendMsg();" :disabled="!fieldsFilled">Submit</button>
+                        <button class="btn btn-dark" @click="showModal = false">Cancel</button>
                     </div>
                 </form>
             </div>
