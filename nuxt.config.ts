@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   css: [
-    "~/assets/bootstrap/dist/css/bootstrap.css"
+    "~/node_modules/bootstrap/dist/css/bootstrap.css"
   ],
 
   modules:  [
