@@ -1,20 +1,20 @@
 <script setup lang="ts">
 import Bike from '@/assets/bicycle-3-svgrepo-com.svg'
 import CableTV from '@/assets/wifi-svgrepo-com.svg'
-import Bathroom from '@/assets/Full Bathroom.svg'
-import Kitchen from '@/assets/full kitchen.svg'
-import OutdoorSpace from '@/assets/Outdoor communal space.svg'
-import Beds from '@/assets/Twin Bed.svg'
-import WasherDryer from '@/assets/Washer and Dryer On-site.svg'
+import Bathroom from '@/assets/FullBathroom.svg'
+import Kitchen from '@/assets/fullkitchen.svg'
+import OutdoorSpace from '@/assets/Outdoor_communal_space.svg'
+import Beds from '@/assets/TwinBed.svg'
+import WasherDryer from '@/assets/Washer_and _Dryer_On-site.svg'
 import Parking from '@/assets/parking-svgrepo-com.svg'
-import SingleDouble from '@/assets/Single and double.svg'
+import SingleDouble from '@/assets/Single_and_double.svg'
 
 import AboutUsPhoto from '@/assets/AboutUsPhoto.jpeg'
-import HouseAmenPhoto from '@/assets/House Amenities.jpeg'
-import MissionPhoto from '@/assets/Our Mission.jpeg'
-import HomePhoto from '@/assets/Our Home.jpeg'
+import HouseAmenPhoto from '@/assets/HouseAmenities.jpeg'
+import MissionPhoto from '@/assets/OurMission.jpeg'
+import HomePhoto from '@/assets/OurHome.jpeg'
 import CommunityPhoto from '@/assets/north_conway.jpg'
-import ApproachPhoto from '@/assets/Our Approach.jpeg'
+import ApproachPhoto from '@/assets/OurApproach.jpeg'
 
 const showModal = defineModel()
 const caller = inject('caller')
