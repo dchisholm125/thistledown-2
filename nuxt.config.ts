@@ -11,6 +11,8 @@ export default defineNuxtConfig({
     baseURL: '/',
   },
 
+  ssr: false,
+
   modules:  [
     ['@nuxtjs/google-fonts', {
       families: {
