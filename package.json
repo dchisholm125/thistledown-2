@@ -20,5 +20,8 @@
     "nuxt": "^3.13.2",
     "twilio": "5.3.5",
     "vue": "latest"
+  },
+  "devDependencies": {
+    "serve": "^14.2.4"
   }
 }
