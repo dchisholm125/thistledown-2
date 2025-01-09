@@ -17,8 +17,6 @@ jobs:
       # Pick your own package manager and build script
       - run: npm install
       - run: npx nuxt build --preset github_pages
-      - run: npm install -g serve
-      - run: serve ./dist
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
