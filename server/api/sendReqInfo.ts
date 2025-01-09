@@ -13,7 +13,7 @@ export default defineEventHandler((event) => {
             secure: false, // upgrade later with STARTTLS
             auth: {
                 user: "dchisholm125@gmail.com",
-                pass: "uyoe nimg ixnp gfvq",
+                pass: process.env.GMAIL_TOKEN,
             },
     })
     
