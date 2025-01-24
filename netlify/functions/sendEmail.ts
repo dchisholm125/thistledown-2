@@ -13,14 +13,14 @@ export const handler = async (event) => {
             port: 587,
             secure: false, // upgrade later with STARTTLS
             auth: {
-                user: "dchisholm125@gmail.com",
-                pass: GMAIL_TOKEN,
+                user: process.env.GMAIL_USER,
+                pass: process.env.GMAIL_TOKEN,
             },
     })
     
     const mailOptions = {
-        from: "dchisholm125@gmail.com",
-        to: "dchisholm125@gmail.com",
+        from: process.env.GMAIL_USER,
+        to: process.env.GMAIL_USER,
         subject: "New Housemate Application Received: (" + body.applicant + ')',
         text: "Dear Stacey and Derek,\n\n A new application has been received from: " + body.applicant
              + "\n\n " + body.text,
