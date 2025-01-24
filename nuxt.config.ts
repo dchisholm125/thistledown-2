@@ -7,12 +7,6 @@ export default defineNuxtConfig({
     "~/node_modules/bootstrap/dist/css/bootstrap.css"
   ],
 
-  nitro: {
-    baseURL: '/',
-  },
-
-  ssr: false,
-
   modules:  [
     ['@nuxtjs/google-fonts', {
       families: {
@@ -38,4 +32,5 @@ export default defineNuxtConfig({
       }
   }],  
   ],
+  routeRules: { "/": { prerender: true, }, }
 })
