@@ -1,3 +1,4 @@
+require('dotenv').config()
 import nodemailer from 'nodemailer'
 
 export const handler = async (event) => {

@@ -1,3 +1,4 @@
+require('dotenv').config()
 import twilio from 'twilio';
 
 export const handler = async (event) => {
