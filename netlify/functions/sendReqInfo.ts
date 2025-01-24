@@ -13,7 +13,7 @@ export const handler = async (event) => {
             secure: false, // upgrade later with STARTTLS
             auth: {
                 user: "dchisholm125@gmail.com",
-                pass: process.env.GMAIL_TOKEN,
+                pass: GMAIL_TOKEN,
             },
     })
     
