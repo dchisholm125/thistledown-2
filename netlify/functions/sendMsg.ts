@@ -1,17 +1,19 @@
 import twilio from 'twilio';
 
-export default defineEventHandler((event) => {
+export const handler = async (event) => {
+
+    const parsedBody = JSON.parse(event.body)
     // return blogs list;
-    console.log(getQuery(event).msgBody)
+    console.log(parsedBody.msgBody)
 
     const accountSid = process.env.TWILIO_ACCOUNT;
     const authToken = process.env.TWILIO_TOKEN;
     const client = twilio(accountSid, authToken);
     client.messages
         .create({
-            body: getQuery(event).msgBody?.toString(),
+            body: parsedBody.msgBody?.toString(),
             from: '+18888285693',
-            to: getQuery(event).phoneNum?.toString() + ', '
+            to: parsedBody.phoneNum?.toString() + ', '
         })
         .then((message: any) => console.log(message.sid));
-  });
+}

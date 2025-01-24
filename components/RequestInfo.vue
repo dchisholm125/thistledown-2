@@ -14,30 +14,31 @@ const fieldsFilled = computed(() => {
              && reqFName.value !== '' && reqPhoneNum.value !== '' && reqEmailAddr.value !== '' && reqTextArea.value !== ''
 })
 
-function sendEmail() {
-    $fetch('/api/sendReqInfo', {
-        query: { 
+async function sendEmail() {
+    const response = await fetch('/.netlify/functions/sendReqInfo',{
+        method: "POST",
+        body: JSON.stringify({ 
             applicant: reqFName.value + (reqLName.value ? ' ' + reqLName.value : ''),
             phoneNum: reqPhoneNum.value,
             emailAddr: reqEmailAddr.value,
             text: reqTextArea.value,
-        }
-    })
+        }),
+    }).then(response => response.json())
+
+    console.log(response)
 }
 
-function sendMsg() {
-
-    $fetch('/api/sendMsg', {
-    query: { msgBody: 'Dear Stacey, \n\nYou have just received a new request for information from:\n\n\tApplicant Name: ' + reqFName.value + ' ' + reqLName.value + '\n\t' + 'Phone #: ' 
-                 + reqPhoneNum.value  + '\n\t' + 'Email Address: ' + reqEmailAddr.value  + '\n\n They have contacted because: \"' + reqTextArea.value + '\"',
-             phoneNum: '+17204468559'}
-    })
-
-    $fetch('/api/sendMsg', {
-        query: { msgBody: 'Dear Derek, \n\nYou have just received a new request for information from:\n\n\tApplicant Name: ' + reqFName.value + ' ' + reqLName.value + '\n\t' + 'Phone #: ' 
+async function sendMsg() {
+    const response = await fetch('/.netlify/functions/sendMsg',{
+        method: "POST",
+        body: JSON.stringify({ 
+            msgBody: 'Dear Derek, \n\nYou have just received a new request for information from:\n\n\tApplicant Name: ' + reqFName.value + ' ' + reqLName.value + '\n\t' + 'Phone #: ' 
                     + reqPhoneNum.value  + '\n\t' + 'Email Address: ' + reqEmailAddr.value  + '\n\n They have contacted because: \"' + reqTextArea.value + '\"',
-                phoneNum: '+17204468559'}
-    })
+            phoneNum: '+17204468559'
+        }),
+    }).then(response => response.json())
+
+    console.log(response)
 }
 
 </script>

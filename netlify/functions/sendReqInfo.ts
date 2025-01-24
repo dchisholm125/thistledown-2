@@ -1,11 +1,11 @@
 import nodemailer from 'nodemailer'
 
-export default defineEventHandler((event) => {
+export const handler = async (event) => {
+
     // get text from event
+    const parsedBody = JSON.parse(event.body)
 
-    const queryProps = getQuery(event)
-
-    console.log(queryProps.text)
+    console.log(parsedBody.text)
 
     const transporter = nodemailer.createTransport({
             host: "smtp.gmail.com",
@@ -20,15 +20,12 @@ export default defineEventHandler((event) => {
     const mailOptions = {
     from: "dchisholm125@gmail.com",
     to: "dchisholm125@gmail.com",
-    subject: "New Housemate Application Received: (" + queryProps.applicant + ')',
-    text: "Dear Stacey and Derek,\n\n A new application has been received from: " + queryProps.applicant
-         + "\n\n " + queryProps.text,
-    attachments: [
-        {
-        filename: queryProps.applicant + " - Housemate Application.txt",
-        content: queryProps.text, 
-        },
-    ],
+    subject: "New Information Request Received: (" + parsedBody.applicant + ')',
+    text: "Dear Stacey and Derek,\n\n A new information request has been received from: \n" + parsedBody.applicant
+         + "\n\n He has reached out because: \n\n" + parsedBody.text
+         + "\n\nContact information is below: \n\n"
+         + `Phone #: ${parsedBody.phoneNum}\n`
+         + `Email Address: ${parsedBody.emailAddr}\n\n (sent via Derek C's gmail)`
     }
     
     transporter.sendMail(mailOptions, (error, info) => {
@@ -39,4 +36,4 @@ export default defineEventHandler((event) => {
         console.log("Email sent: " + info.response)
     }
     })
-  })
+  }
