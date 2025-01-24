@@ -81,6 +81,16 @@ const contentSections = ref([
     },
 ])
 
+function sendEmail() {
+
+    $fetch('/api/sendEmail', {
+        query: { 
+            applicant: 'DEREK', 
+            text: 'TEST FROM CONTENT COMPONENT',
+        }
+    })
+}
+
 </script>
 
 <template>
@@ -149,7 +159,7 @@ const contentSections = ref([
                         can be a part of your recovery journey. Please contact us for more
                         information or to schedule a visit.</p>
                     <div class="d-lg-flex d-none justify-content-center">
-                        <button type="button" class="btn btn-primary btn-lg px-4 me-md-2" @click="showModal = !showModal; caller = 'info';">Request Info</button>
+                        <button type="button" class="btn btn-primary btn-lg px-4 me-md-2" @click="showModal = !showModal; caller = 'info'; sendEmail()">Request Info</button>
                         <button type="button" class="btn btn-success btn-lg px-4" @click="showModal = !showModal; caller = 'apply';">Apply Now!</button>
                     </div>
                 </div>
