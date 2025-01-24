@@ -4,10 +4,10 @@ import nodemailer from 'nodemailer'
 export const handler = async (event) => {
 
     // get text from event
-    const body = JSON.parse(event.body)
+    const parsedBody = JSON.parse(event.body)
 
-    console.log(body.applicant)
-    console.log(body.text)
+    console.log(parsedBody.applicant)
+    console.log(parsedBody.text)
 
     const transporter = nodemailer.createTransport({
             host: "smtp.gmail.com",
@@ -22,13 +22,13 @@ export const handler = async (event) => {
     const mailOptions = {
         from: process.env.GMAIL_USER,
         to: process.env.GMAIL_USER,
-        subject: "New Housemate Application Received: (" + body.applicant + ')',
-        text: "Dear Stacey and Derek,\n\n A new application has been received from: " + body.applicant
-             + "\n\n " + body.text,
+        subject: "New Housemate Application Received: (" + parsedBody.applicant + ')',
+        text: "Dear Stacey and Derek,\n\n A new application has been received from: " + parsedBody.applicant
+             + "\n\n " + parsedBody.text,
         attachments: [
             {
-            filename: body.applicant + " - Housemate Application.txt",
-            content: body.text, 
+            filename: parsedBody.applicant + " - Housemate Application.txt",
+            content: parsedBody.text, 
             },
         ],
     }

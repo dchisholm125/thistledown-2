@@ -3,6 +3,8 @@ import twilio from 'twilio';
 
 export const handler = async (event) => {
 
+    let retId
+
     const parsedBody = JSON.parse(event.body)
     // return blogs list;
     console.log(parsedBody.msgBody)
@@ -12,9 +14,14 @@ export const handler = async (event) => {
     const client = twilio(accountSid, authToken);
     client.messages
         .create({
-            body: parsedBody.msgBody?.toString(),
+            body: parsedBody.msgBody,
             from: '+18888285693',
-            to: parsedBody.phoneNum?.toString() + ', '
+            to: parsedBody.phoneNum + ', '
         })
-        .then((message: any) => console.log(message.sid));
+        .then((message: any) => {retId = message.sid; console.log(message.sid);});
+
+    return {
+        statusCode: 200,
+        body: JSON.stringify({ response: retId}),
+    }
 }
