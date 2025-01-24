@@ -12,7 +12,7 @@ provide('caller', caller)
 
 
   <div class="vstack w-100">
-      <img class="img-fluid" src="~/assets/thistledown-banner.png" />
+      <img class="img-fluid" src="~/public/thistledown-banner.png" />
 
       <ThistledownHeader v-model="showModal" />
 

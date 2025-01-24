@@ -5,7 +5,7 @@ const props = defineProps<{
   imgAfterText: boolean, //
   sectionName?: string, // 
   sectionContent?: string, //
-  imgSrc: any, //
+  imgSrc: Component, //
   sectionBlurb?: string, // 
   boldCallout?: string, // 
 }>()
