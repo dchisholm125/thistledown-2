@@ -28,12 +28,10 @@ export const handler = async (event) => {
          + `Email Address: ${parsedBody.emailAddr}\n\n (sent via Derek C's gmail)`
     }
     
-    transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-        console.log('a damn error.....')
-        console.log(error)
-    } else {
-        console.log("Email sent: " + info.response)
+    const info = await transporter.sendMail(mailOptions)
+
+    return {
+        statusCode: 200,
+        body: JSON.stringify({ response: info}),
     }
-    })
-  }
+}

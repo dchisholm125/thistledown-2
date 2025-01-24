@@ -89,7 +89,7 @@ async function sendEmail() {
             text: 'TEST FROM CONTENT COMPONENT',}),
     }).then(response => response.json())
 
-        console.log(response)
+    console.log(response.JSON())
 }
 
 </script>

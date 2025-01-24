@@ -32,17 +32,11 @@ export const handler = async (event) => {
         ],
     }
 
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            console.log('a damn error.....')
-            console.log(error)
-            return { statusCode: 500, message: error}
-        } else {
-            console.log("Email sent: " + info.response)
-            return { statusCode: 200,  message: "email sent" + info.response }
-        }
-    })
+    const info = await transporter.sendMail(mailOptions)
 
-    return { statusCode: 200,  message: "email sent" }
+    return {
+        statusCode: 200,
+        body: JSON.stringify({ response: info}),
+    }
 
 }
