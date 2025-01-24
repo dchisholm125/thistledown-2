@@ -16,7 +16,7 @@
     "html2pdf": "latest",
     "html2pdf.js": "latest",
     "jspdf": "^2.5.2",
-    "nodemailer": "^6.9.16",
+    "nodemailer": "^6.10.0",
     "nuxt": "^3.13.2",
     "twilio": "5.3.5",
     "vue": "latest"

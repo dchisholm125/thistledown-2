@@ -39,21 +39,4 @@ export default defineNuxtConfig({
   }],  
   ],
   routeRules: { "/": { prerender: true, }, },
-  vite: {
-    build: {
-      rollupOptions: {
-        output: {
-          // https://github.com/rollup/rollup/blob/master/src/utils/sanitizeFileName.ts
-          sanitizeFileName(name) {
-            const match = DRIVE_LETTER_REGEX.exec(name);
-            const driveLetter = match ? match[0] : "";
-            return (
-              driveLetter +
-              name.slice(driveLetter.length).replace(INVALID_CHAR_REGEX, "")
-            );
-          },
-        },
-      },
-    },
-  },
 })
