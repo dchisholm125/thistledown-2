@@ -18,7 +18,7 @@ export const handler = async (event) => {
             from: '+18888285693',
             to: parsedBody.phoneNum + ', '
         })
-        .then((message: any) => {retId = message.sid; console.log(message.sid);});
+        .then((message: any) => retId = message);
 
     return {
         statusCode: 200,

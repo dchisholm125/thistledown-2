@@ -25,6 +25,7 @@ async function sendEmail() {
         }),
     }).then(response => response.json())
 
+    console.log('sendEmail():')
     console.log(response)
 }
 
@@ -38,6 +39,7 @@ async function sendMsg() {
         }),
     }).then(response => response.json())
 
+    console.log('sendMsg():')
     console.log(response)
 }
 
