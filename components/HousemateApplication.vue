@@ -138,7 +138,7 @@ async function sendMsg() {
         method: "POST", 
         body: JSON.stringify({ 
             msgBody: "Dear Stacey & Derek,\n\n" + initialStr + coordStr, 
-            phoneNum: '+17204468559; +17204468559'
+            phoneNum: '+6037035491; +16039153224'
         }),
     })
 }
