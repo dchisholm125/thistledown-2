@@ -6,8 +6,8 @@ export const handler = async (event) => {
     // return blogs list;
     console.log(parsedBody.msgBody)
 
-    const accountSid = process.env.TWILIO_ACCOUNT_SID;
-    const authToken = process.env.TWILIO_AUTH_TOKEN;
+    const accountSid = process.env.TWILIO_ACCOUNT;
+    const authToken = process.env.TWILIO_TOKEN;
     const client = require('twilio')(accountSid, authToken);
     
     async function createMessage() {
