@@ -3,34 +3,31 @@ const twilio = require("twilio");
 
 export const handler = async (event) => {
 
-    let retId
-
     const parsedBody = JSON.parse(event.body)
     // return blogs list;
     console.log(parsedBody.msgBody)
 
-    const accountSid = process.env.TWILIO_ACCOUNT;
-    const authToken = process.env.TWILIO_TOKEN;
+    const accountSid = process.env.TWILIO_ACCOUNT_SID;
+    const authToken = process.env.TWILIO_AUTH_TOKEN;
     const client = twilio(accountSid, authToken);
+    
+    async function createMessage() {
+      const message = await client.messages.create({
+        body: parsedBody.msgBody,
+        from: "+18888285693",
+        to: parsedBody.phoneNum,
+      });
+    
+      console.log(message.body);
 
-    try {
-        client.messages
-        .create({
-            body: parsedBody.msgBody,
-            from: '+18888285693',
-            to: parsedBody.phoneNum + ', '
-        })
-        .then((message: any) => retId = message); 
+      return message
+    }
 
-        return {
-            statusCode: 200,
-            body: JSON.stringify({ response: retId}),
-        }
-    } catch(error){
-        return {
-            statusCode: 500,
-            body: JSON.stringify({ response: error}),
-        }
+    const returned = createMessage()
+    
+    return {
+        statusCode: 200,
+        body: JSON.stringify({ response: returned}),
     }
 
 }
