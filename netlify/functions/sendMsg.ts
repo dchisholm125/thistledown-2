@@ -1,32 +1,27 @@
 require('dotenv').config()
 
-export const handler = async (event) => {
+    /* */
+
+    const client = require('twilio')(process.env.TWILIO_ACCOUNT, process.env.TWILIO_TOKEN);
+
+exports.handler = function(event, context, callback) {
 
     const parsedBody = JSON.parse(event.body)
-    // return blogs list;
-    console.log(parsedBody.msgBody)
 
-    const accountSid = process.env.TWILIO_ACCOUNT;
-    const authToken = process.env.TWILIO_TOKEN;
-    const client = require('twilio')(accountSid, authToken);
-    
-    async function createMessage() {
-      const message = await client.messages.create({
-        body: parsedBody.msgBody,
+  Promise.all(
+    // split the string of several messages into single numbers
+    // send message to each of them
+    parsedBody.phoneNum.split(';').map(num => {
+      return client.messages.create({
         from: "+18888285693",
-        to: parsedBody.phoneNum,
+        to: num,
+        body: parsedBody.msgBody,
       });
-    
-      console.log(message.body);
-
-      return message
-    }
-
-    const returned = createMessage()
-    
-    return {
-        statusCode: 200,
-        body: JSON.stringify({ response: returned}),
-    }
-
-}
+    })
+  )
+    .then(() => callback(null, { statusCode: 200, body: 'Created' }))
+    .catch(e => {
+      console.log(e);
+      callback(e);
+    });
+};
