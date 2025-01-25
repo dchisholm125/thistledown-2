@@ -1,5 +1,5 @@
 require('dotenv').config()
-import twilio from 'twilio';
+const twilio = require("twilio");
 
 export const handler = async (event) => {
 
