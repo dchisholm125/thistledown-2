@@ -63,11 +63,11 @@ async function sendMsg() {
                         </div>
                     </div>
                     <div class="form-floating">
-                            <input v-model="reqPhoneNum" type="number" class="form-control" id="floatingPhoneNum" placeholder="Password" required>
+                            <input v-model="reqPhoneNum" type="number" class="form-control" id="floatingPhoneNum" placeholder="603-555-1234" required>
                             <label for="floatingPhoneNum">Phone #</label>
                     </div>
                     <div class="form-floating my-4">
-                            <input v-model="reqEmailAddr" type="password" class="form-control" id="floatingEmail" placeholder="Password" required>
+                            <input v-model="reqEmailAddr" type="email" class="form-control" id="floatingEmail" placeholder="example@abc.com" required>
                             <label for="floatingEmail">Email Address</label>
                     </div>
                     <div class="form-floating my-4">

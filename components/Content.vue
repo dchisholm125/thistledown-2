@@ -80,18 +80,6 @@ const contentSections = ref([
     },
 ])
 
-async function sendEmail() {
-    const response = await fetch('/.netlify/functions/sendEmail',{
-        method: "POST",
-        body: JSON.stringify({ 
-            applicant: 'DEREK', 
-            text: 'TEST FROM CONTENT COMPONENT',}),
-    }).then(response => response.json())
-
-    console.log('Content => sendEmail()')
-    console.log(response)
-}
-
 </script>
 
 <template>
@@ -161,7 +149,7 @@ async function sendEmail() {
                         can be a part of your recovery journey. Please contact us for more
                         information or to schedule a visit.</p>
                     <div class="d-lg-flex d-none justify-content-center">
-                        <button type="button" class="btn btn-primary btn-lg px-4 me-md-2" @click="showModal = !showModal; caller = 'info'; sendEmail()">Request Info</button>
+                        <button type="button" class="btn btn-primary btn-lg px-4 me-md-2" @click="showModal = !showModal; caller = 'info'">Request Info</button>
                         <button type="button" class="btn btn-success btn-lg px-4" @click="showModal = !showModal; caller = 'apply';">Apply Now!</button>
                     </div>
                 </div>
