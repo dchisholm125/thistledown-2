@@ -134,16 +134,24 @@ function sendMsg() {
     //IF they are there, give them this.
     let coordStr = appSupeEmail.value || appSupePhone.value ? '\n\tCoordinator Email/Phone: ' + appSupeEmail.value + '/' + appSupePhone.value : '' 
 
-    useFetch('/api/sendMsg', {
-        query: { msgBody: "Dear Stacey,\n\n" + initialStr + coordStr, phoneNum: '+17204468559'}
+    useFetch('/.netlify/functions/sendMsg', {
+        method: "POST", 
+        body: JSON.stringify({ 
+            msgBody: "Dear Stacey,\n\n" + initialStr + coordStr, 
+            phoneNum: '+17204468559'
+        }),
     })
 
-    useFetch('/api/sendMsg', {
-        query: { msgBody: "Dear Derek,\n\n" + initialStr + coordStr, phoneNum: '+17204468559'}
+    useFetch('/.netlify/functions/sendMsg', {
+        method: "POST", 
+        body: JSON.stringify({ 
+            msgBody: "Dear Derek,\n\n" + initialStr + coordStr, 
+            phoneNum: '+17204468559'
+        }),
     })
 }
 
-function sendEmail() {
+async function sendEmail() {
     let strBuilder = ''
 
     let entryArr = Object.entries(applicationObj.value)
@@ -152,11 +160,12 @@ function sendEmail() {
 
     console.log(strBuilder)
 
-    $fetch('/api/sendEmail', {
-        query: { 
+    const response = await fetch('/.netlify/functions/sendEmail',{
+        method: "POST",
+        body: JSON.stringify({
             applicant: applicantName.value, 
             text: strBuilder,
-        }
+        })
     })
 }
 
