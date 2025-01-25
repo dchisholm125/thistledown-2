@@ -4,7 +4,6 @@ import twilio from 'twilio';
 export const handler = async (event) => {
 
     let retId
-    twilio.
 
     const parsedBody = JSON.parse(event.body)
     // return blogs list;
