@@ -1,5 +1,4 @@
 require('dotenv').config()
-const twilio = require("twilio");
 
 export const handler = async (event) => {
 
@@ -9,7 +8,7 @@ export const handler = async (event) => {
 
     const accountSid = process.env.TWILIO_ACCOUNT_SID;
     const authToken = process.env.TWILIO_AUTH_TOKEN;
-    const client = twilio(accountSid, authToken);
+    const client = require('twilio')(accountSid, authToken);
     
     async function createMessage() {
       const message = await client.messages.create({
