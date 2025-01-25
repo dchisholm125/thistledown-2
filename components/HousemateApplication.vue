@@ -126,27 +126,19 @@ function addRemove(commChar: string) {
     commCharChoices.value.indexOf(commChar) < 0 ? commCharChoices.value.push(commChar) : commCharChoices.value.splice(commCharChoices.value.indexOf(commChar),1)
 }
 
-function sendMsg() {
+async function sendMsg() {
 
     let initialStr = 'You have just received a new a Housemate Application:\n\n\tApplicant Name: ' + applicantName.value + '\n\t' + 'Phone #: ' 
-                     + applicantPhoneNum.value  + '\n\t' + 'Email Address: ' + applicantEmailAddr.value
+                    + applicantPhoneNum.value  + '\n\t' + 'Email Address: ' + applicantEmailAddr.value
 
     //IF they are there, give them this.
     let coordStr = appSupeEmail.value || appSupePhone.value ? '\n\tCoordinator Email/Phone: ' + appSupeEmail.value + '/' + appSupePhone.value : '' 
 
-    useFetch('/.netlify/functions/sendMsg', {
+    const response = await fetch('/.netlify/functions/sendMsg', {
         method: "POST", 
         body: JSON.stringify({ 
             msgBody: "Dear Stacey,\n\n" + initialStr + coordStr, 
-            phoneNum: '+17204468559'
-        }),
-    })
-
-    useFetch('/.netlify/functions/sendMsg', {
-        method: "POST", 
-        body: JSON.stringify({ 
-            msgBody: "Dear Derek,\n\n" + initialStr + coordStr, 
-            phoneNum: '+17204468559'
+            phoneNum: '+17204468559; +17204468559'
         }),
     })
 }
