@@ -1,12 +1,10 @@
 require('dotenv').config()
 
-    /* */
-
-    const client = require('twilio')(process.env.TWILIO_ACCOUNT, process.env.TWILIO_TOKEN);
+const client = require('twilio')(process.env.TWILIO_ACCOUNT, process.env.TWILIO_TOKEN);
 
 exports.handler = function(event, context, callback) {
 
-    const parsedBody = JSON.parse(event.body)
+  const parsedBody = JSON.parse(event.body)
 
   Promise.all(
     // split the string of several messages into single numbers

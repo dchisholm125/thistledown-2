@@ -9,12 +9,12 @@ import WasherDryer from '@/public/Washer_and _Dryer_On-site.svg'
 import Parking from '@/public/parking-svgrepo-com.svg'
 import SingleDouble from '@/public/Single_and_double.svg'
 
-import AboutUsPhoto from '@/public/AboutUsPhoto.jpeg'
-import HouseAmenPhoto from '@/public/HouseAmenities.jpeg'
-import MissionPhoto from '@/public/OurMission.jpeg'
-import HomePhoto from '@/public/OurHome.jpeg'
-import CommunityPhoto from '@/public/north_conway.jpg'
-import ApproachPhoto from '@/public/OurApproach.jpeg'
+import AboutUsPhoto from '@/public/AboutUs.jpeg'
+import HouseAmenPhoto from '@/public/thistle.jpeg'
+import MissionPhoto from '@/public/ourmission.jpeg'
+import HomePhoto from '@/public/stream-rock.jpeg'
+import CommunityPhoto from '@/public/north-conway-video.mov'
+import ApproachPhoto from '@/public/ourapproach.jpeg'
 
 const showModal = defineModel()
 const caller = inject('caller')
@@ -61,7 +61,6 @@ const contentSections = ref([
                         + "personal bicycles on property and a local taxi service is available for "
                         + "transportation needs, ensuring everyone has easy access to reliable travel "
                         + "to and from their place of employment.",
-        imgSrc: CommunityPhoto,
     },
     {
         sectionName: "Our Approach",
@@ -103,6 +102,7 @@ async function sendEmail() {
             :sectionName="section.sectionName"
             :sectionContent="section.sectionContent"
             :imgSrc="section.imgSrc"
+            :movSrc="section.movSrc"
             :boldCallout="section.boldCallout"
                 />
 
