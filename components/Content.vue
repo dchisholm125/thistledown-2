@@ -22,60 +22,61 @@ const caller = inject('caller')
 const contentSections = ref([
     {
         sectionName: "About Us",
-        sectionContent: "Welcome to Thistledown Recovery Home, a dedicated sober living "
-                    + "environment for men who are committed to transforming their lives and "
-                    + "embracing sobriety. Our home is designed to provide a supportive and "
-                    + "structured living space that fosters personal growth, accountability, and a "
-                    + "sense of community among residents who are on a shared journey towards "
-                    + "lasting recovery.",
+        sectionContent: "Welcome to Thistledown Recovery Home, a NH Coalition of Recovery" +
+                        "Residences (NHCORR) certified recovery home located at 379 White" +
+                        "Mountain Highway in Conway, NH. We offer a dedicated living" +
+                        "environment for men who are committed to transforming their lives and" +
+                        "embracing sobriety. Our home is designed to provide a supportive and" +
+                        "structured living space that fosters personal growth, accountability, and a" +
+                        "sense of community among residents who are on a shared journey towards" +
+                        "lasting recovery.",
         imgSrc: AboutUsPhoto,
     },
     {
         sectionName: "Our Mission",
-        sectionContent: "At Thistledown Recovery Home, our mission is to offer a safe and stable "
-                    + "residence for men who have made a conscious decision to stay sober. We "
-                    + "understand that the path to recovery is unique for each individual, and we "
-                    + "believe that a supportive home environment is crucial to maintaining "
-                    + "sobriety. Our goal is to facilitate a space where residents can focus on their "
-                    + "recovery without the distractions and triggers of their previous living "
-                    + "situations.",
+        sectionContent: "At Thistledown Recovery Home, our mission is to offer a safe and stable" +
+                        "residence for men who have made a conscious decision to embrace" + 
+                        "recovery. We understand that the path to recovery is unique for everyone," +
+                        "and we believe that a supportive home environment is crucial to" +
+                        "maintaining sobriety. Our goal is to facilitate a space where residents can" +
+                        "focus on their recovery without the distractions and triggers of their" +
+                        "previous living situations.",
         imgSrc: MissionPhoto,
     },
     {
         sectionName: "Our Home",
-        sectionContent: "Located in Conway, New Hampshire, our sober home is situated in a "
-                        + "peaceful and welcoming community. The residence features comfortable "
-                        + "living quarters, communal spaces for fellowship and relaxation, and "
-                        + "amenities that cater to the needs of our residents. We take pride in "
-                        + "maintaining a clean and orderly home to ensure a conducive atmosphere "
-                        + "for recovery.",
+        sectionContent: "Located in Conway, New Hampshire, our recovery home is situated in a" +
+                        "peaceful and welcoming community. The residence features comfortable" +
+                        "living quarters, communal spaces for fellowship and relaxation, and" +
+                        "amenities that cater to the needs of our residents. We take pride in" +
+                        "maintaining a clean and orderly home to ensure a conducive atmosphere" +
+                        "for recovery.",
         imgSrc: HomePhoto,
         boldCallout: "CONWAY, NH", 
     },
     {
         sectionName: "Our Community",
-        sectionContent: "Thistledown is situated in a vibrant community, surrounded by a plethora of "
-                        + "diverse businesses. Its convenient location offers residents the unique "
-                        + "advantage of being within walking distance or a short commute to a wide "
-                        + "range of employment opportunities. Residents are permitted to store "
-                        + "personal bicycles on property and a local taxi service is available for "
-                        + "transportation needs, ensuring everyone has easy access to reliable travel "
-                        + "to and from their place of employment.",
+        sectionContent: "Thistledown is situated in a vibrant community, surrounded by a plethora of" +
+                        "diverse businesses. Its convenient location offers residents the unique" +
+                        "advantage of being within a short commute to a wide range of employment" +
+                        "opportunities. Residents are permitted to store personal bicycles on" +
+                        "property and a local taxi service is available for transportation needs," +
+                        "ensuring everyone has easy access to reliable travel to and from their" +
+                        "place of employment.",
     },
     {
         sectionName: "Our Approach",
-        sectionContent: "While we do not offer treatment services, our sober home operates with "
-                        + "guidelines that encourage a sober lifestyle. We require that all residents "
-                        + "commit to staying drug and alcohol-free, actively participate in their "
-                        + "personal recovery plans, and support one another in their journey. Our "
-                        + "house rules are designed to promote respect, responsibility, and personal "
-                        + "growth.\n\t"
-                        + "\n\t"
-                        + "Residents are encouraged to engage with external recovery programs, "
-                        + "attend meetings, and seek out the resources they need to support their "
-                        + "sobriety. We believe in the power of community and peer support, and our "
-                        + "home serves as a foundation from which residents can build a fulfilling and "
-                        + "sober life.",
+        sectionContent: "Thistledown operates with guidelines that encourage a sober lifestyle. We" +
+                        "require that all residents remain abstinent from non-prescribed mind-" +
+                        "altering drugs, actively participate in their personal recovery plans, and" +
+                        "support one another in their journey. Our house rules are designed to" +
+                        "promote respect, responsibility, and personal growth..\n\t" +
+                        "\n\t" + 
+                        "Residents are encouraged to engage with external recovery programs," +
+                        "attend meetings and recovery activities of their choice, and seek out the" +
+                        "resources needed to support their recovery. We believe in the power of" +
+                        "community and peer support, and our home serves as a foundation from" +
+                        "which residents can build a fulfilling and sober life.",
         imgSrc: ApproachPhoto,
     },
 ])
@@ -113,7 +114,7 @@ const contentSections = ref([
                             <AmenityCard :icon="CableTV" text="Cable television, free wi-fi"/>
                         </div>
                         <div class="col">
-                            <AmenityCard :icon="Parking" text="Parking on-site"/>
+                            <AmenityCard :icon="Parking" text="On-site parking for residence who have a valid driver’s license, registered vehicle, and auto insurance."/>
                         </div>
                     </div>
                     <div class="col d-flex flex-column">
@@ -127,7 +128,7 @@ const contentSections = ref([
                             <AmenityCard :icon="OutdoorSpace" text="Outdoor communal space and smoking area"/>
                         </div>
                         <div class="col">
-                            <AmenityCard :icon="Bike" text="Storage space for bicycles or motor vehicles"/>
+                            <AmenityCard :icon="Bike" text="Outdoor storage for personal bicycles and scooters"/>
                         </div>
                         <div class="col">
                             <!-- intentionally empty for symmetry -->
@@ -143,11 +144,11 @@ const contentSections = ref([
             <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
                 <div class="col justify-content-center text-center">
                     <h1 id="join-us" class="display-5 fw-bold text-body-emphasis lh-1 mb-3">Join Us</h1>
-                    <p class="lead">If you or a loved one is seeking a men's sober living home that prioritizes a
-                        sober and supportive living environment, Thistledown Recovery Home may
-                        be the right fit. We invite you to learn more about our home and how we
-                        can be a part of your recovery journey. Please contact us for more
-                        information or to schedule a visit.</p>
+                    <p class="lead">If you or a loved one is seeking a men&#39;s recovery home that prioritizes a
+                    supportive living environment, Thistledown Recovery Home may be the
+                    right fit. We invite you to learn more about our home and how we can be a
+                    part of your recovery journey. Please contact us for more information or to
+                    schedule a visit.</p>
                     <div class="d-lg-flex d-none justify-content-center">
                         <button type="button" class="btn btn-primary btn-lg px-4 me-md-2" @click="showModal = !showModal; caller = 'info'">Request Info</button>
                         <button type="button" class="btn btn-success btn-lg px-4" @click="showModal = !showModal; caller = 'apply';">Apply Now!</button>
