@@ -13,7 +13,6 @@ import AboutUsPhoto from '@/public/AboutUs.jpeg'
 import HouseAmenPhoto from '@/public/thistle.jpeg'
 import MissionPhoto from '@/public/ourmission.jpeg'
 import HomePhoto from '@/public/stream-rock.jpeg'
-import CommunityPhoto from '@/public/north-conway-video.mov'
 import ApproachPhoto from '@/public/ourapproach.jpeg'
 
 const showModal = defineModel()
@@ -22,60 +21,60 @@ const caller = inject('caller')
 const contentSections = ref([
     {
         sectionName: "About Us",
-        sectionContent: "Welcome to Thistledown Recovery Home, a NH Coalition of Recovery" +
-                        "Residences (NHCORR) certified recovery home located at 379 White" +
-                        "Mountain Highway in Conway, NH. We offer a dedicated living" +
-                        "environment for men who are committed to transforming their lives and" +
-                        "embracing sobriety. Our home is designed to provide a supportive and" +
-                        "structured living space that fosters personal growth, accountability, and a" +
-                        "sense of community among residents who are on a shared journey towards" +
+        sectionContent: "Welcome to Thistledown Recovery Home, a NH Coalition of Recovery " +
+                        "Residences (NHCORR) certified recovery home located at 379 White " +
+                        "Mountain Highway in Conway, NH. We offer a dedicated living " +
+                        "environment for men who are committed to transforming their lives and " +
+                        "embracing sobriety. Our home is designed to provide a supportive and " +
+                        "structured living space that fosters personal growth, accountability, and a " +
+                        "sense of community among residents who are on a shared journey towards " +
                         "lasting recovery.",
         imgSrc: AboutUsPhoto,
     },
     {
         sectionName: "Our Mission",
-        sectionContent: "At Thistledown Recovery Home, our mission is to offer a safe and stable" +
-                        "residence for men who have made a conscious decision to embrace" + 
-                        "recovery. We understand that the path to recovery is unique for everyone," +
-                        "and we believe that a supportive home environment is crucial to" +
-                        "maintaining sobriety. Our goal is to facilitate a space where residents can" +
-                        "focus on their recovery without the distractions and triggers of their" +
+        sectionContent: "At Thistledown Recovery Home, our mission is to offer a safe and stable " +
+                        "residence for men who have made a conscious decision to embrace " + 
+                        "recovery. We understand that the path to recovery is unique for everyone, " +
+                        "and we believe that a supportive home environment is crucial to " +
+                        "maintaining sobriety. Our goal is to facilitate a space where residents can " +
+                        "focus on their recovery without the distractions and triggers of their " +
                         "previous living situations.",
         imgSrc: MissionPhoto,
     },
     {
         sectionName: "Our Home",
-        sectionContent: "Located in Conway, New Hampshire, our recovery home is situated in a" +
-                        "peaceful and welcoming community. The residence features comfortable" +
-                        "living quarters, communal spaces for fellowship and relaxation, and" +
-                        "amenities that cater to the needs of our residents. We take pride in" +
-                        "maintaining a clean and orderly home to ensure a conducive atmosphere" +
+        sectionContent: "Located in Conway, New Hampshire, our recovery home is situated in a " +
+                        "peaceful and welcoming community. The residence features comfortable " +
+                        "living quarters, communal spaces for fellowship and relaxation, and " +
+                        "amenities that cater to the needs of our residents. We take pride in " +
+                        "maintaining a clean and orderly home to ensure a conducive atmosphere " +
                         "for recovery.",
         imgSrc: HomePhoto,
         boldCallout: "CONWAY, NH", 
     },
     {
         sectionName: "Our Community",
-        sectionContent: "Thistledown is situated in a vibrant community, surrounded by a plethora of" +
-                        "diverse businesses. Its convenient location offers residents the unique" +
-                        "advantage of being within a short commute to a wide range of employment" +
-                        "opportunities. Residents are permitted to store personal bicycles on" +
-                        "property and a local taxi service is available for transportation needs," +
-                        "ensuring everyone has easy access to reliable travel to and from their" +
+        sectionContent: "Thistledown is situated in a vibrant community, surrounded by a plethora of " +
+                        "diverse businesses. Its convenient location offers residents the unique " +
+                        "advantage of being within a short commute to a wide range of employment " +
+                        "opportunities. Residents are permitted to store personal bicycles on " +
+                        "property and a local taxi service is available for transportation needs, " +
+                        "ensuring everyone has easy access to reliable travel to and from their " +
                         "place of employment.",
     },
     {
         sectionName: "Our Approach",
-        sectionContent: "Thistledown operates with guidelines that encourage a sober lifestyle. We" +
+        sectionContent: "Thistledown operates with guidelines that encourage a sober lifestyle. We " +
                         "require that all residents remain abstinent from non-prescribed mind-" +
-                        "altering drugs, actively participate in their personal recovery plans, and" +
-                        "support one another in their journey. Our house rules are designed to" +
-                        "promote respect, responsibility, and personal growth..\n\t" +
+                        "altering drugs, actively participate in their personal recovery plans, and " +
+                        "support one another in their journey. Our house rules are designed to " +
+                        "promote respect, responsibility, and personal growth. \n\t" +
                         "\n\t" + 
-                        "Residents are encouraged to engage with external recovery programs," +
-                        "attend meetings and recovery activities of their choice, and seek out the" +
-                        "resources needed to support their recovery. We believe in the power of" +
-                        "community and peer support, and our home serves as a foundation from" +
+                        "Residents are encouraged to engage with external recovery programs, " +
+                        "attend meetings and recovery activities of their choice, and seek out the " +
+                        "resources needed to support their recovery. We believe in the power of " +
+                        "community and peer support, and our home serves as a foundation from " +
                         "which residents can build a fulfilling and sober life.",
         imgSrc: ApproachPhoto,
     },
