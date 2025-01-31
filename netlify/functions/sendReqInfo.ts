@@ -20,7 +20,7 @@ export const handler = async (event) => {
     
     const mailOptions = {
     from: process.env.GMAIL_USER,
-    to: process.env.GMAIL_USER,
+    to: "info@thistledownrecoveryhome.com; derek.leclerc@gmail.com;",
     subject: "New Information Request Received: (" + parsedBody.applicant + ')',
     text: "Dear Stacey and Derek,\n\n A new information request has been received from: \n" + parsedBody.applicant
          + "\n\n He has reached out because: \n\n" + parsedBody.text
