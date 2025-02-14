@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
+const ownerInfo = [
+    {name: "Stacey", phoneNum: '+17204468559'},
+    {name: "Derek", phoneNum: '+17204468559'},
+] // change, add, or remove info as-needed here!
+
 const showModal = defineModel('showModal')
 
 const clickedOnce = ref<boolean>(true)
@@ -128,27 +133,21 @@ function addRemove(commChar: string) {
 
 async function sendMsg() {
 
-    let initialStr = 'You have just received a new a Housemate Application:\n\n\tApplicant Name: ' + applicantName.value + '\n\t' + 'Phone #: ' 
+    for (const owner in ownerInfo) {
+        let initialStr = 'You have just received a new a Housemate Application:\n\n\tApplicant Name: ' + applicantName.value + '\n\t' + 'Phone #: ' 
                     + applicantPhoneNum.value  + '\n\t' + 'Email Address: ' + applicantEmailAddr.value
 
-    //IF they are there, give them this.
-    let coordStr = appSupeEmail.value || appSupePhone.value ? '\n\tCoordinator Email/Phone: ' + appSupeEmail.value + '/' + appSupePhone.value : '' 
+        //IF they are there, give them this.
+        let coordStr = appSupeEmail.value || appSupePhone.value ? '\n\tCoordinator Email/Phone: ' + appSupeEmail.value + '/' + appSupePhone.value : '' 
 
-    const response = await fetch('/.netlify/functions/sendMsg', {
-        method: "POST", 
-        body: JSON.stringify({ 
-            msgBody: "Dear Stacey,\n\n" + initialStr + coordStr, 
-            phoneNum: '+17204468559'
-        }),
-    })
-
-    const response2 = await fetch('/.netlify/functions/sendMsg', {
-        method: "POST", 
-        body: JSON.stringify({ 
-            msgBody: "Dear Derek,\n\n" + initialStr + coordStr, 
-            phoneNum: '+17204468559'
-        }),
-    })
+        const response = await fetch('/.netlify/functions/sendMsg', {
+            method: "POST", 
+            body: JSON.stringify({ 
+                msgBody: `"Dear ${owner.name},\n\n ${initialStr} ${coordStr}`, 
+                phoneNum: owner.phoneNum
+            }),
+        })
+    }
 }
 
 async function sendEmail() {

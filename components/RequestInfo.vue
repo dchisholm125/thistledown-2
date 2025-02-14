@@ -1,4 +1,10 @@
 <script setup lang="ts">
+
+const ownerInfo = [
+    {name: "Stacey", phoneNum: '+17204468559'},
+    {name: "Derek", phoneNum: '+17204468559'},
+] // change, add, or remove info as-needed here!
+
 const showModal = defineModel('showModal')
 
 const clickedOnce = ref<boolean>(true)
@@ -30,26 +36,16 @@ async function sendEmail() {
 }
 
 async function sendMsg() {
-    let response = await fetch('/.netlify/functions/sendMsg',{
-        method: "POST",
-        body: JSON.stringify({ 
-            msgBody: 'Dear Stacey, \n\nYou have just received a new request for information from:\n\n\tApplicant Name: ' + reqFName.value + ' ' + reqLName.value + '\n\t' + 'Phone #: ' 
-                    + reqPhoneNum.value  + '\n\t' + 'Email Address: ' + reqEmailAddr.value  + '\n\n They have contacted because: \"' + reqTextArea.value + '\"',
-            phoneNum: '+17204468559'
-        }),
-    }).then(response => response.json())
 
-    let response2 = await fetch('/.netlify/functions/sendMsg',{
-        method: "POST",
-        body: JSON.stringify({ 
-            msgBody: 'Dear Derek, \n\nYou have just received a new request for information from:\n\n\tApplicant Name: ' + reqFName.value + ' ' + reqLName.value + '\n\t' + 'Phone #: ' 
-                    + reqPhoneNum.value  + '\n\t' + 'Email Address: ' + reqEmailAddr.value  + '\n\n They have contacted because: \"' + reqTextArea.value + '\"',
-            phoneNum: '+17204468559'
-        }),
-    }).then(response => response.json())
-
-    console.log('sendMsg():')
-    console.log(response)
+    for (const owner in ownerInfo) {
+        let response = await fetch('/.netlify/functions/sendMsg',{
+            method: "POST",
+            body: JSON.stringify({ 
+                msgBody: `Dear ${owner.name}, \n\nYou have just received a new request for information from:\n\n\tApplicant Name: ${reqFName.value} ${reqLName.value}\n\tPhone #: ${reqPhoneNum.value}\n\tEmail Address: ${reqEmailAddr.value}\n\n They have contacted because: \" ${reqTextArea.value}\"'`,
+                phoneNum: owner.phoneNum
+            }),
+        }).then(response => response.json())
+    }
 }
 
 </script>
