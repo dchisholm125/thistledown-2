@@ -39,7 +39,7 @@ async function sendMsg() {
         }),
     }).then(response => response.json())
 
-    response = await fetch('/.netlify/functions/sendMsg',{
+    let response2 = await fetch('/.netlify/functions/sendMsg',{
         method: "POST",
         body: JSON.stringify({ 
             msgBody: 'Dear Derek, \n\nYou have just received a new request for information from:\n\n\tApplicant Name: ' + reqFName.value + ' ' + reqLName.value + '\n\t' + 'Phone #: ' 

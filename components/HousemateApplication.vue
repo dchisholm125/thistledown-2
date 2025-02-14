@@ -320,7 +320,7 @@ const fieldsFilled = computed(() => {
 
             <div class="d-flex gap-2">
                 <!-- <button class="btn btn-danger"@click="sendMsg()" :disabled="!passesBasicCheck">Send to Derek L.</button> -->
-                <button type="submit" class="btn btn-primary" @click.prevent="clickedOnce = !clickedOnce; sendEmail(); sendMsg()" :disabled="!fieldsFilled">Submit</button>
+                <button type="submit" class="btn btn-primary" @click.prevent="clickedOnce = !clickedOnce; sendEmail(); sendMsg();" :disabled="!fieldsFilled">Submit</button>
                 <button class="btn btn-dark" @click="showModal = false">Cancel</button>
             </div>
         </form>

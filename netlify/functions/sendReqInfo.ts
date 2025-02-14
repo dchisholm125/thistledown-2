@@ -27,7 +27,7 @@ export const handler = async (event) => {
          + "\n\n He has reached out because: \n\n" + parsedBody.text
          + "\n\nContact information is below: \n\n"
          + `Phone #: ${parsedBody.phoneNum}\n`
-         + `Email Address: ${parsedBody.emailAddr}\n\n (sent via Derek C's gmail)`
+         + `Email Address: ${parsedBody.emailAddr}\n\n (sent via thistledownrecoveryhome543@gmail.com)`
     }
     
     const info = await transporter.sendMail(mailOptions)
