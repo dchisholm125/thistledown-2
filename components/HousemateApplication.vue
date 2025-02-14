@@ -137,8 +137,16 @@ async function sendMsg() {
     const response = await fetch('/.netlify/functions/sendMsg', {
         method: "POST", 
         body: JSON.stringify({ 
-            msgBody: "Dear Stacey & Derek,\n\n" + initialStr + coordStr, 
-            phoneNum: '+6037035491; +16039153224'
+            msgBody: "Dear Stacey,\n\n" + initialStr + coordStr, 
+            phoneNum: '+17204468559'
+        }),
+    })
+
+    const response2 = await fetch('/.netlify/functions/sendMsg', {
+        method: "POST", 
+        body: JSON.stringify({ 
+            msgBody: "Dear Derek,\n\n" + initialStr + coordStr, 
+            phoneNum: '+17204468559'
         }),
     })
 }
