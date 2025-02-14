@@ -30,9 +30,9 @@ async function sendEmail() {
     console.log(response)
 }
 
-function sendStacey() {sendMsgAPI('Stacey', '+17204468559'); console.log('send stacey')}
-function sendDerek() {sendMsgAPI('Derek', '+17204468559'); console.log('send derek, then me')}
-function sendDerekC() {sendMsgAPI('Derek C', '+17204468559')}
+function sendStacey() {sendReqInfoMsgAPI('Stacey', '+16037035491')}
+function sendDerek() {sendReqInfoMsgAPI('Derek', '+16039153224')}
+function sendDerekC() {sendReqInfoMsgAPI('Derek C', '+17204468559')}
 
 async function sendMsg() {
     await setTimeout(() => {sendStacey()}, 5000)
@@ -40,7 +40,7 @@ async function sendMsg() {
     sendDerekC()
 }
 
-async function sendMsgAPI(name: string, phoneNum: string) {
+async function sendReqInfoMsgAPI(name: string, phoneNum: string) {
     let response = await fetch('/.netlify/functions/sendMsg',{
             method: "POST",
             body: JSON.stringify({ 

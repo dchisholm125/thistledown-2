@@ -126,9 +126,9 @@ function addRemove(commChar: string) {
     commCharChoices.value.indexOf(commChar) < 0 ? commCharChoices.value.push(commChar) : commCharChoices.value.splice(commCharChoices.value.indexOf(commChar),1)
 }
 
-function sendStacey() {sendMsgAPI('Stacey', '+17204468559'); console.log('send stacey')}
-function sendDerek() {sendMsgAPI('Derek', '+17204468559'); console.log('send derek, then me')}
-function sendDerekC() {sendMsgAPI('Derek C', '+17204468559')}
+function sendStacey() {sendHouseAppMsgAPI('Stacey', '+16037035491')}
+function sendDerek() {sendHouseAppMsgAPI('Derek', '+16039153224')}
+function sendDerekC() {sendHouseAppMsgAPI('Derek C', '+17204468559')}
 
 async function sendMsg() {
     await setTimeout(() => {sendStacey()}, 5000)
@@ -136,7 +136,7 @@ async function sendMsg() {
     sendDerekC()
 }
 
-async function sendMsgAPI(name: string, phoneNum: string) {
+async function sendHouseAppMsgAPI(name: string, phoneNum: string) {
 
     let initialStr = 'You have just received a new a Housemate Application:\n\n\tApplicant Name: ' + applicantName.value + '\n\t' + 'Phone #: ' 
                 + applicantPhoneNum.value  + '\n\t' + 'Email Address: ' + applicantEmailAddr.value
