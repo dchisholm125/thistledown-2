@@ -1,11 +1,5 @@
 <script setup lang="ts">
 
-const ownerInfo = [
-    {name: "Stacey", phoneNum: '+17204468559'},
-    {name: "Derek", phoneNum: '+17204468559'},
-    {name: "Derek C.", phoneNum: '+17204468559'},
-] // change, add, or remove info as-needed here!
-
 const showModal = defineModel('showModal')
 
 const clickedOnce = ref<boolean>(true)

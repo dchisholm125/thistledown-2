@@ -1,12 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const ownerInfo = [
-    {name: "Stacey", phoneNum: '+16037035491'},
-    {name: "Derek", phoneNum: '+16039153224'},
-    {name: "Derek C.", phoneNum: '+17204468559'},
-] // change, add, or remove info as-needed here!
-
 const showModal = defineModel('showModal')
 
 const clickedOnce = ref<boolean>(true)
@@ -132,25 +126,33 @@ function addRemove(commChar: string) {
     commCharChoices.value.indexOf(commChar) < 0 ? commCharChoices.value.push(commChar) : commCharChoices.value.splice(commCharChoices.value.indexOf(commChar),1)
 }
 
+function sendStacey() {sendMsgAPI('Stacey', '+17204468559'); console.log('send stacey')}
+function sendDerek() {sendMsgAPI('Derek', '+17204468559'); console.log('send derek, then me')}
+function sendDerekC() {sendMsgAPI('Derek C', '+17204468559')}
+
 async function sendMsg() {
+    await setTimeout(() => {sendStacey()}, 5000)
+    await setTimeout(() => {sendDerek()}, 5000)
+    sendDerekC()
+}
 
-    for (const owner in ownerInfo) {
-        let initialStr = 'You have just received a new a Housemate Application:\n\n\tApplicant Name: ' + applicantName.value + '\n\t' + 'Phone #: ' 
-                    + applicantPhoneNum.value  + '\n\t' + 'Email Address: ' + applicantEmailAddr.value
+async function sendMsgAPI(name: string, phoneNum: string) {
 
-        //IF they are there, give them this.
-        let coordStr = appSupeEmail.value || appSupePhone.value ? '\n\tCoordinator Email/Phone: ' + appSupeEmail.value + '/' + appSupePhone.value : '' 
+    let initialStr = 'You have just received a new a Housemate Application:\n\n\tApplicant Name: ' + applicantName.value + '\n\t' + 'Phone #: ' 
+                + applicantPhoneNum.value  + '\n\t' + 'Email Address: ' + applicantEmailAddr.value
 
-        const response = await fetch('/.netlify/functions/sendMsg', {
-            method: "POST", 
-            body: JSON.stringify({ 
-                msgBody: `"Dear ${owner.name},\n\n ${initialStr} ${coordStr}`, 
-                phoneNum: owner.phoneNum
-            }),
-        })
+    //IF they are there, give them this.
+    let coordStr = appSupeEmail.value || appSupePhone.value ? '\n\tCoordinator Email/Phone: ' + appSupeEmail.value + '/' + appSupePhone.value : '' 
 
-        setTimeout(() => {console.log('waiting 5 seconds...')}, 5000)
-    }
+    const response = await fetch('/.netlify/functions/sendMsg', {
+        method: "POST", 
+        body: JSON.stringify({ 
+            msgBody: `"Dear ${name},\n\n ${initialStr} ${coordStr}`, 
+            phoneNum: phoneNum
+        }),
+    })
+
+    await setTimeout(() => {console.log('waiting 5 seconds...')}, 5000)
 }
 
 async function sendEmail() {
