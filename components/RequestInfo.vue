@@ -1,8 +1,8 @@
 <script setup lang="ts">
 
 const ownerInfo = [
-    {name: "Stacey", phoneNum: '+16037035491'},
-    {name: "Derek", phoneNum: '+16039153224'},
+    {name: "Stacey", phoneNum: '+17204468559'},
+    {name: "Derek", phoneNum: '+17204468559'},
     {name: "Derek C.", phoneNum: '+17204468559'},
 ] // change, add, or remove info as-needed here!
 
@@ -36,19 +36,24 @@ async function sendEmail() {
     console.log(response)
 }
 
-async function sendMsg() {
+function sendStacey() {sendMsgAPI('Stacey', '+17204468559'); console.log('send stacey')}
+function sendDerek() {sendMsgAPI('Derek', '+17204468559'); console.log('send derek, then me')}
+function sendDerekC() {sendMsgAPI('Derek C', '+17204468559')}
 
-    for (const owner in ownerInfo) {
-        let response = await fetch('/.netlify/functions/sendMsg',{
+async function sendMsg() {
+    await setTimeout(() => {sendStacey()}, 5000)
+    await setTimeout(() => {sendDerek()}, 5000)
+    sendDerekC()
+}
+
+async function sendMsgAPI(name: string, phoneNum: string) {
+    let response = await fetch('/.netlify/functions/sendMsg',{
             method: "POST",
             body: JSON.stringify({ 
-                msgBody: `Dear ${owner.name}, \n\nYou have just received a new request for information from:\n\n\tApplicant Name: ${reqFName.value} ${reqLName.value}\n\tPhone #: ${reqPhoneNum.value}\n\tEmail Address: ${reqEmailAddr.value}\n\n They have contacted because: \" ${reqTextArea.value}\"'`,
-                phoneNum: owner.phoneNum
+                msgBody: `Dear ${name}, \n\nYou have just received a new request for information from:\n\n\tApplicant Name: ${reqFName.value} ${reqLName.value}\n\tPhone #: ${reqPhoneNum.value}\n\tEmail Address: ${reqEmailAddr.value}\n\n They have contacted because: \" ${reqTextArea.value}\"'`,
+                phoneNum: phoneNum
             }),
         }).then(response => response.json())
-
-        await setTimeout(() => {console.log('waiting 5 seconds...')}, 5000)
-    }
 }
 
 </script>
