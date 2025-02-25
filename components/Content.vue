@@ -14,6 +14,7 @@ import HouseAmenPhoto from '@/public/thistle.jpeg'
 import MissionPhoto from '@/public/ourmission.jpeg'
 import HomePhoto from '@/public/stream-rock.jpeg'
 import ApproachPhoto from '@/public/ourapproach.jpeg'
+import OurCommunity from '@/public/north_conway.jpg'
 
 const showModal = defineModel()
 const caller = inject('caller')
@@ -62,6 +63,7 @@ const contentSections = ref([
                         "property and a local taxi service is available for transportation needs, " +
                         "ensuring everyone has easy access to reliable travel to and from their " +
                         "place of employment.",
+        imgSrc: OurCommunity,
     },
     {
         sectionName: "Our Approach",
