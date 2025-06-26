@@ -1,11 +1,15 @@
 require('dotenv').config()
 
 const client = require('twilio')(process.env.TWILIO_ACCOUNT, process.env.TWILIO_TOKEN);
+import { RateLimiter } from './utils/rateLimiter'
+import { sendAlertEmail } from './utils/email'
+
+const RATE_LIMIT_WINDOW = 60000 // 1 minute
+const MAX_REQUESTS_PER_WINDOW = 3
+const limiter = new RateLimiter(RATE_LIMIT_WINDOW, MAX_REQUESTS_PER_WINDOW)
 
 // Simple rate limiting - store recent requests in memory
 const recentRequests = new Map()
-const RATE_LIMIT_WINDOW = 60000 // 1 minute
-const MAX_REQUESTS_PER_WINDOW = 3 // Lower limit for SMS to prevent spam
 
 exports.handler = function(event, context, callback) {
   // Only allow POST requests
@@ -18,52 +22,24 @@ exports.handler = function(event, context, callback) {
 
   // Get client IP for rate limiting
   const clientIP = event.headers['x-forwarded-for'] || event.headers['x-real-ip'] || 'unknown'
-  const now = Date.now()
-  
-  // Clean old entries
-  for (const [ip, timestamps] of recentRequests.entries()) {
-    recentRequests.set(ip, timestamps.filter(time => now - time < RATE_LIMIT_WINDOW))
-    if (recentRequests.get(ip).length === 0) {
-      recentRequests.delete(ip)
+
+  // Rate limit check
+  if (!limiter.isAllowed(clientIP)) {
+    // Send alert if threshold is hit
+    if (limiter.getRequestCount(clientIP) === MAX_REQUESTS_PER_WINDOW) {
+      sendAlertEmail({
+        ip: clientIP,
+        count: MAX_REQUESTS_PER_WINDOW,
+        timestamps: limiter.getTimestamps(clientIP)
+      })
     }
-  }
-  
-  // Check rate limit
-  const clientRequests = recentRequests.get(clientIP) || []
-  if (clientRequests.length >= MAX_REQUESTS_PER_WINDOW) {
     return callback(null, {
       statusCode: 429,
       body: JSON.stringify({ error: 'Too many SMS requests. Please try again later.' })
     });
   }
-  
-  // Add current request
-  clientRequests.push(now)
-  recentRequests.set(clientIP, clientRequests)
 
-  // ALERT: If more than 3 requests in the window, send an alert email
-  if (clientRequests.length === MAX_REQUESTS_PER_WINDOW) {
-    try {
-      const nodemailer = require('nodemailer')
-      const alertTransporter = nodemailer.createTransport({
-        host: "smtp.gmail.com",
-        port: 587,
-        secure: false,
-        auth: {
-          user: process.env.GMAIL_USER,
-          pass: process.env.GMAIL_TOKEN,
-        },
-      })
-      alertTransporter.sendMail({
-        from: process.env.GMAIL_USER,
-        to: "dchisholm125@gmail.com",
-        subject: `ALERT: High SMS activity detected from IP ${clientIP}`,
-        text: `More than ${MAX_REQUESTS_PER_WINDOW} SMS requests from IP ${clientIP} in the last minute.\n\nTimestamps: ${clientRequests.join(", ")}`
-      }, (err) => { if (err) console.error('Failed to send alert email:', err) })
-    } catch (e) {
-      console.error('Failed to send alert email:', e)
-    }
-  }
+  limiter.addRequest(clientIP)
 
   try {
     const parsedBody = JSON.parse(event.body)

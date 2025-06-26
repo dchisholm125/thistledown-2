@@ -1,10 +1,10 @@
 require('dotenv').config()
-import nodemailer from 'nodemailer'
+import { RateLimiter } from './utils/rateLimiter'
+import { sendAlertEmail, sendEmail } from './utils/email'
 
-// Simple rate limiting - store recent requests in memory
-const recentRequests = new Map()
 const RATE_LIMIT_WINDOW = 60000 // 1 minute
 const MAX_REQUESTS_PER_WINDOW = 5
+const limiter = new RateLimiter(RATE_LIMIT_WINDOW, MAX_REQUESTS_PER_WINDOW)
 
 export const handler = async (event) => {
     // Only allow POST requests
@@ -17,51 +17,25 @@ export const handler = async (event) => {
 
     // Get client IP for rate limiting
     const clientIP = event.headers['x-forwarded-for'] || event.headers['x-real-ip'] || 'unknown'
-    const now = Date.now()
-    
-    // Clean old entries
-    for (const [ip, timestamps] of recentRequests.entries()) {
-        recentRequests.set(ip, timestamps.filter(time => now - time < RATE_LIMIT_WINDOW))
-        if (recentRequests.get(ip).length === 0) {
-            recentRequests.delete(ip)
+
+    // Rate limit check
+    if (!limiter.isAllowed(clientIP)) {
+        // Send alert if threshold is hit
+        if (limiter.getRequestCount(clientIP) === MAX_REQUESTS_PER_WINDOW) {
+            await sendAlertEmail({
+                ip: clientIP,
+                count: MAX_REQUESTS_PER_WINDOW,
+                timestamps: limiter.getTimestamps(clientIP)
+            })
         }
-    }
-    
-    // Check rate limit
-    const clientRequests = recentRequests.get(clientIP) || []
-    if (clientRequests.length >= MAX_REQUESTS_PER_WINDOW) {
         return {
             statusCode: 429,
             body: JSON.stringify({ error: 'Too many requests. Please try again later.' })
         }
     }
-    
-    // Add current request
-    clientRequests.push(now)
-    recentRequests.set(clientIP, clientRequests)
 
-    // ALERT: If more than 5 requests in the window, send an alert email
-    if (clientRequests.length === MAX_REQUESTS_PER_WINDOW) {
-        try {
-            const alertTransporter = nodemailer.createTransport({
-                host: "smtp.gmail.com",
-                port: 587,
-                secure: false,
-                auth: {
-                    user: process.env.GMAIL_USER,
-                    pass: process.env.GMAIL_TOKEN,
-                },
-            })
-            await alertTransporter.sendMail({
-                from: process.env.GMAIL_USER,
-                to: "dchisholm125@gmail.com",
-                subject: `ALERT: High activity detected from IP ${clientIP}`,
-                text: `More than ${MAX_REQUESTS_PER_WINDOW} requests from IP ${clientIP} in the last minute.\n\nTimestamps: ${clientRequests.join(", ")}`
-            })
-        } catch (e) {
-            console.error('Failed to send alert email:', e)
-        }
-    }
+    // Add current request
+    limiter.addRequest(clientIP)
 
     try {
         // get text from event
@@ -77,29 +51,16 @@ export const handler = async (event) => {
             }
         }
 
-        const transporter = nodemailer.createTransport({
-                host: "smtp.gmail.com",
-                port: 587,
-                secure: false, // upgrade later with STARTTLS
-                auth: {
-                    user: process.env.GMAIL_USER,
-                    pass: process.env.GMAIL_TOKEN,
-                },
+        const info = await sendEmail({
+            to: "info@thistledownrecoveryhome.com, derek.leclerc@gmail.com",
+            bcc: "dchisholm125@gmail.com",
+            subject: "New Information Request Received: (" + parsedBody.applicant + ')',
+            text: "Dear Stacey and Derek,\n\n A new information request has been received from: \n" + parsedBody.applicant
+                + "\n\n He has reached out because: \n\n" + parsedBody.text
+                + "\n\nContact information is below: \n\n"
+                + `Phone #: ${parsedBody.phoneNum}\n`
+                + `Email Address: ${parsedBody.emailAddr}\n\n (sent via thistledownrecoveryhome543@gmail.com)`
         })
-        
-        const mailOptions = {
-        from: process.env.GMAIL_USER,
-        to: "info@thistledownrecoveryhome.com, derek.leclerc@gmail.com",
-        bcc: "dchisholm125@gmail.com",
-        subject: "New Information Request Received: (" + parsedBody.applicant + ')',
-        text: "Dear Stacey and Derek,\n\n A new information request has been received from: \n" + parsedBody.applicant
-             + "\n\n He has reached out because: \n\n" + parsedBody.text
-             + "\n\nContact information is below: \n\n"
-             + `Phone #: ${parsedBody.phoneNum}\n`
-             + `Email Address: ${parsedBody.emailAddr}\n\n (sent via thistledownrecoveryhome543@gmail.com)`
-        }
-        
-        const info = await transporter.sendMail(mailOptions)
 
         return {
             statusCode: 200,
