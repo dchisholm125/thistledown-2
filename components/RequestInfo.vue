@@ -3,6 +3,7 @@
 const showModal = defineModel('showModal')
 
 const clickedOnce = ref<boolean>(true)
+const isSubmitting = ref<boolean>(false)
 
 const reqFName = defineModel('reqFName')
 const reqLName = defineModel('reqLName')
@@ -16,18 +17,43 @@ const fieldsFilled = computed(() => {
 })
 
 async function sendEmail() {
-    const response = await fetch('/.netlify/functions/sendReqInfo',{
-        method: "POST",
-        body: JSON.stringify({ 
-            applicant: reqFName.value + (reqLName.value ? ' ' + reqLName.value : ''),
-            phoneNum: reqPhoneNum.value,
-            emailAddr: reqEmailAddr.value,
-            text: reqTextArea.value,
-        }),
-    }).then(response => response.json())
+    try {
+        const response = await fetch('/.netlify/functions/sendReqInfo',{
+            method: "POST",
+            body: JSON.stringify({ 
+                applicant: reqFName.value + (reqLName.value ? ' ' + reqLName.value : ''),
+                phoneNum: reqPhoneNum.value,
+                emailAddr: reqEmailAddr.value,
+                text: reqTextArea.value,
+            }),
+        })
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        
+        const result = await response.json()
+        console.log('sendEmail() success:', result)
+    } catch (error) {
+        console.error('sendEmail() error:', error)
+    }
+}
 
-    console.log('sendEmail():')
-    console.log(response)
+async function handleSubmit() {
+    if (isSubmitting.value || !fieldsFilled.value) return
+    
+    isSubmitting.value = true
+    
+    try {
+        await sendEmail()
+        await sendMsg()
+        clickedOnce.value = false
+    } catch (error) {
+        console.error('Submission error:', error)
+        alert('There was an error submitting your request. Please try again.')
+    } finally {
+        isSubmitting.value = false
+    }
 }
 
 function sendStacey() {sendReqInfoMsgAPI('Stacey', '+16037035491')}
@@ -35,19 +61,34 @@ function sendDerek() {sendReqInfoMsgAPI('Derek', '+16039153224')}
 function sendDerekC() {sendReqInfoMsgAPI('Derek C', '+17204468559')}
 
 async function sendMsg() {
-    await setTimeout(() => {sendStacey()}, 5000)
-    await setTimeout(() => {sendDerek()}, 5000)
-    sendDerekC()
+    // Send messages with proper delays to prevent overwhelming the SMS service
+    sendStacey()
+    
+    setTimeout(() => {
+        sendDerek()
+    }, 3000)
+    
+    setTimeout(() => {
+        sendDerekC()
+    }, 6000)
 }
 
 async function sendReqInfoMsgAPI(name: string, phoneNum: string) {
-    let response = await fetch('/.netlify/functions/sendMsg',{
-            method: "POST",
-            body: JSON.stringify({ 
-                msgBody: `Dear ${name}, \n\nYou have just received a new request for information from:\n\n\tApplicant Name: ${reqFName.value} ${reqLName.value}\n\tPhone #: ${reqPhoneNum.value}\n\tEmail Address: ${reqEmailAddr.value}\n\n They have contacted because: \" ${reqTextArea.value}\"'`,
-                phoneNum: phoneNum
-            }),
-        }).then(response => response.json())
+    try {
+        let response = await fetch('/.netlify/functions/sendMsg',{
+                method: "POST",
+                body: JSON.stringify({ 
+                    msgBody: `Dear ${name}, \n\nYou have just received a new request for information from:\n\n\tApplicant Name: ${reqFName.value} ${reqLName.value}\n\tPhone #: ${reqPhoneNum.value}\n\tEmail Address: ${reqEmailAddr.value}\n\n They have contacted because: \" ${reqTextArea.value}\"'`,
+                    phoneNum: phoneNum
+                }),
+            })
+            
+        if (!response.ok) {
+            console.error(`SMS to ${name} failed:`, response.statusText)
+        }
+    } catch (error) {
+        console.error(`SMS sending error to ${name}:`, error)
+    }
 }
 
 </script>
@@ -83,7 +124,9 @@ async function sendReqInfoMsgAPI(name: string, phoneNum: string) {
                     </div>
                     <div class="d-flex gap-2">
                         <!-- <button class="btn btn-danger"@click="sendMsg()" :disabled="!passesBasicCheck">Send to Derek L.</button> -->
-                        <button class="btn btn-primary" @click.prevent.stop="clickedOnce = !clickedOnce; sendEmail(); sendMsg();" :disabled="!fieldsFilled">Submit</button>
+                        <button class="btn btn-primary" @click.prevent.stop="handleSubmit()" :disabled="!fieldsFilled || isSubmitting">
+                            {{ isSubmitting ? 'Submitting...' : 'Submit' }}
+                        </button>
                         <button class="btn btn-dark" @click="showModal = false">Cancel</button>
                     </div>
                 </form>

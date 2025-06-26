@@ -4,6 +4,7 @@ import { ref } from 'vue'
 const showModal = defineModel('showModal')
 
 const clickedOnce = ref<boolean>(true)
+const isSubmitting = ref<boolean>(false)
 
 const applicantName = defineModel<string>('applicantName')
 const todaysDate = ref<Date>(new Date(Date.now()))
@@ -131,9 +132,16 @@ function sendDerek() {sendHouseAppMsgAPI('Derek', '+16039153224')}
 function sendDerekC() {sendHouseAppMsgAPI('Derek C', '+17204468559')}
 
 async function sendMsg() {
-    await setTimeout(() => {sendStacey()}, 5000)
-    await setTimeout(() => {sendDerek()}, 5000)
-    sendDerekC()
+    // Send messages with proper delays to prevent overwhelming the SMS service
+    sendStacey()
+    
+    setTimeout(() => {
+        sendDerek()
+    }, 3000)
+    
+    setTimeout(() => {
+        sendDerekC()
+    }, 6000)
 }
 
 async function sendHouseAppMsgAPI(name: string, phoneNum: string) {
@@ -144,15 +152,21 @@ async function sendHouseAppMsgAPI(name: string, phoneNum: string) {
     //IF they are there, give them this.
     let coordStr = appSupeEmail.value || appSupePhone.value ? '\n\tCoordinator Email/Phone: ' + appSupeEmail.value + '/' + appSupePhone.value : '' 
 
-    const response = await fetch('/.netlify/functions/sendMsg', {
-        method: "POST", 
-        body: JSON.stringify({ 
-            msgBody: `"Dear ${name},\n\n ${initialStr} ${coordStr}`, 
-            phoneNum: phoneNum
-        }),
-    })
-
-    await setTimeout(() => {console.log('waiting 5 seconds...')}, 5000)
+    try {
+        const response = await fetch('/.netlify/functions/sendMsg', {
+            method: "POST", 
+            body: JSON.stringify({ 
+                msgBody: `"Dear ${name},\n\n ${initialStr} ${coordStr}`, 
+                phoneNum: phoneNum
+            }),
+        })
+        
+        if (!response.ok) {
+            console.error('SMS sending failed:', response.statusText)
+        }
+    } catch (error) {
+        console.error('SMS sending error:', error)
+    }
 }
 
 async function sendEmail() {
@@ -164,13 +178,41 @@ async function sendEmail() {
 
     console.log(strBuilder)
 
-    const response = await fetch('/.netlify/functions/sendEmail',{
-        method: "POST",
-        body: JSON.stringify({
-            applicant: applicantName.value, 
-            text: strBuilder,
+    try {
+        const response = await fetch('/.netlify/functions/sendEmail',{
+            method: "POST",
+            body: JSON.stringify({
+                applicant: applicantName.value, 
+                text: strBuilder,
+            })
         })
-    })
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        
+        console.log('Email sent successfully')
+    } catch (error) {
+        console.error('Email sending error:', error)
+        throw error
+    }
+}
+
+async function handleSubmit() {
+    if (isSubmitting.value || !fieldsFilled.value) return
+    
+    isSubmitting.value = true
+    
+    try {
+        await sendEmail()
+        await sendMsg()
+        clickedOnce.value = false
+    } catch (error) {
+        console.error('Submission error:', error)
+        alert('There was an error submitting your application. Please try again.')
+    } finally {
+        isSubmitting.value = false
+    }
 }
 
 const fieldsFilled = computed(() => {
@@ -324,7 +366,9 @@ const fieldsFilled = computed(() => {
 
             <div class="d-flex gap-2">
                 <!-- <button class="btn btn-danger"@click="sendMsg()" :disabled="!passesBasicCheck">Send to Derek L.</button> -->
-                <button type="submit" class="btn btn-primary" @click.prevent="clickedOnce = !clickedOnce; sendEmail(); sendMsg();" :disabled="!fieldsFilled">Submit</button>
+                <button type="submit" class="btn btn-primary" @click.prevent="handleSubmit()" :disabled="!fieldsFilled || isSubmitting">
+                    {{ isSubmitting ? 'Submitting...' : 'Submit' }}
+                </button>
                 <button class="btn btn-dark" @click="showModal = false">Cancel</button>
             </div>
         </form>

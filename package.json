@@ -20,5 +20,9 @@
     "nuxt": "^3.13.2",
     "twilio": "5.3.5",
     "vue": "latest"
+  },
+  "devDependencies": {
+    "@netlify/functions": "^4.1.8",
+    "@types/nodemailer": "^6.4.17"
   }
 }
