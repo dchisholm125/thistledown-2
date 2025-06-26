@@ -41,6 +41,30 @@ exports.handler = function(event, context, callback) {
   clientRequests.push(now)
   recentRequests.set(clientIP, clientRequests)
 
+  // ALERT: If more than 3 requests in the window, send an alert email
+  if (clientRequests.length === MAX_REQUESTS_PER_WINDOW) {
+    try {
+      const nodemailer = require('nodemailer')
+      const alertTransporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 587,
+        secure: false,
+        auth: {
+          user: process.env.GMAIL_USER,
+          pass: process.env.GMAIL_TOKEN,
+        },
+      })
+      alertTransporter.sendMail({
+        from: process.env.GMAIL_USER,
+        to: "dchisholm125@gmail.com",
+        subject: `ALERT: High SMS activity detected from IP ${clientIP}`,
+        text: `More than ${MAX_REQUESTS_PER_WINDOW} SMS requests from IP ${clientIP} in the last minute.\n\nTimestamps: ${clientRequests.join(", ")}`
+      }, (err) => { if (err) console.error('Failed to send alert email:', err) })
+    } catch (e) {
+      console.error('Failed to send alert email:', e)
+    }
+  }
+
   try {
     const parsedBody = JSON.parse(event.body)
     
