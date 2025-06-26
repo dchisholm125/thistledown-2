@@ -1,96 +1,77 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+import { useForm } from '~/composables/useForm'
+import { sendReqInfoAPI, sendMsgAPI } from '~/services/api'
 
 const showModal = defineModel('showModal')
-
 const clickedOnce = ref<boolean>(true)
-const isSubmitting = ref<boolean>(false)
 
-const reqFName = defineModel('reqFName')
-const reqLName = defineModel('reqLName')
-const reqPhoneNum = defineModel('reqPhoneNum')
-const reqEmailAddr = defineModel('reqEmailAddr')
-const reqTextArea = defineModel<string>('reqTextArea')
-
-const fieldsFilled = computed(() => {
-    return reqFName.value !== undefined && reqPhoneNum.value !== undefined && reqEmailAddr.value !== undefined && reqTextArea.value !== undefined
-             && reqFName.value !== '' && reqPhoneNum.value !== '' && reqEmailAddr.value !== '' && reqTextArea.value !== ''
-})
-
-async function sendEmail() {
-    try {
-        const response = await fetch('/.netlify/functions/sendReqInfo',{
-            method: "POST",
-            body: JSON.stringify({ 
-                applicant: reqFName.value + (reqLName.value ? ' ' + reqLName.value : ''),
-                phoneNum: reqPhoneNum.value,
-                emailAddr: reqEmailAddr.value,
-                text: reqTextArea.value,
-            }),
-        })
-        
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`)
-        }
-        
-        const result = await response.json()
-        console.log('sendEmail() success:', result)
-    } catch (error) {
-        console.error('sendEmail() error:', error)
-    }
+const initialState = {
+  reqFName: '',
+  reqLName: '',
+  reqPhoneNum: '',
+  reqEmailAddr: '',
+  reqTextArea: ''
 }
+
+function validate(form: typeof initialState) {
+  return (
+    form.reqFName !== '' &&
+    form.reqPhoneNum !== '' &&
+    form.reqEmailAddr !== '' &&
+    form.reqTextArea !== ''
+  )
+}
+
+const {
+  form,
+  isSubmitting,
+  error,
+  success,
+  reset,
+  isValid
+} = useForm(initialState, validate)
 
 async function handleSubmit() {
-    if (isSubmitting.value || !fieldsFilled.value) return
-    
-    isSubmitting.value = true
-    
-    try {
-        await sendEmail()
-        await sendMsg()
-        clickedOnce.value = false
-    } catch (error) {
-        console.error('Submission error:', error)
-        alert('There was an error submitting your request. Please try again.')
-    } finally {
-        isSubmitting.value = false
-    }
+  if (isSubmitting.value || !isValid()) return
+  isSubmitting.value = true
+  error.value = null
+  try {
+    await sendReqInfoAPI({
+      applicant: form.value.reqFName + (form.value.reqLName ? ' ' + form.value.reqLName : ''),
+      phoneNum: form.value.reqPhoneNum,
+      emailAddr: form.value.reqEmailAddr,
+      text: form.value.reqTextArea
+    })
+    await sendAllMsgs()
+    clickedOnce.value = false
+    success.value = true
+  } catch (e: any) {
+    error.value = e.message || 'Submission failed'
+    alert('There was an error submitting your request. Please try again.')
+  } finally {
+    isSubmitting.value = false
+  }
 }
 
-function sendStacey() {sendReqInfoMsgAPI('Stacey', '+16037035491')}
-function sendDerek() {sendReqInfoMsgAPI('Derek', '+16039153224')}
-function sendDerekC() {sendReqInfoMsgAPI('Derek C', '+17204468559')}
-
-async function sendMsg() {
-    // Send messages with proper delays to prevent overwhelming the SMS service
-    sendStacey()
-    
-    setTimeout(() => {
-        sendDerek()
-    }, 3000)
-    
-    setTimeout(() => {
-        sendDerekC()
-    }, 6000)
+function sendAllMsgs() {
+  sendMsgAPI({
+    msgBody: `Dear Stacey, \n\nYou have just received a new request for information from:\n\n\tApplicant Name: ${form.value.reqFName} ${form.value.reqLName}\n\tPhone #: ${form.value.reqPhoneNum}\n\tEmail Address: ${form.value.reqEmailAddr}\n\n They have contacted because: \" ${form.value.reqTextArea}\"'`,
+    phoneNum: '+16037035491'
+  })
+  setTimeout(() => {
+    sendMsgAPI({
+      msgBody: `Dear Derek, \n\nYou have just received a new request for information from:\n\n\tApplicant Name: ${form.value.reqFName} ${form.value.reqLName}\n\tPhone #: ${form.value.reqPhoneNum}\n\tEmail Address: ${form.value.reqEmailAddr}\n\n They have contacted because: \" ${form.value.reqTextArea}\"'`,
+      phoneNum: '+16039153224'
+    })
+  }, 3000)
+  setTimeout(() => {
+    sendMsgAPI({
+      msgBody: `Dear Derek C, \n\nYou have just received a new request for information from:\n\n\tApplicant Name: ${form.value.reqFName} ${form.value.reqLName}\n\tPhone #: ${form.value.reqPhoneNum}\n\tEmail Address: ${form.value.reqEmailAddr}\n\n They have contacted because: \" ${form.value.reqTextArea}\"'`,
+      phoneNum: '+17204468559'
+    })
+  }, 6000)
 }
-
-async function sendReqInfoMsgAPI(name: string, phoneNum: string) {
-    try {
-        let response = await fetch('/.netlify/functions/sendMsg',{
-                method: "POST",
-                body: JSON.stringify({ 
-                    msgBody: `Dear ${name}, \n\nYou have just received a new request for information from:\n\n\tApplicant Name: ${reqFName.value} ${reqLName.value}\n\tPhone #: ${reqPhoneNum.value}\n\tEmail Address: ${reqEmailAddr.value}\n\n They have contacted because: \" ${reqTextArea.value}\"'`,
-                    phoneNum: phoneNum
-                }),
-            })
-            
-        if (!response.ok) {
-            console.error(`SMS to ${name} failed:`, response.statusText)
-        }
-    } catch (error) {
-        console.error(`SMS sending error to ${name}:`, error)
-    }
-}
-
 </script>
 
 <template>
@@ -99,36 +80,37 @@ async function sendReqInfoMsgAPI(name: string, phoneNum: string) {
             <div v-if="clickedOnce" class="bd-example m-0 border-0">
                 <h2 class="text-center mb-4">Request Info</h2>
                 <h6 class="text-center fst-italic fw-normal">* Please fill out all required fields (highlighted with a <span style="color: red;">red&nbsp;</span>border).</h6>
-                <form>
+                <form @submit.prevent="handleSubmit">
                     <div class="d-flex gap-3 mb-3">
                         <div class="col form-floating mb-3">
-                            <input v-model="reqFName" type="text" class="form-control" id="floatingFName" placeholder="John" required>
+                            <input v-model="form.reqFName" type="text" class="form-control" id="floatingFName" placeholder="John" required>
                             <label for="floatingFName">First Name</label>
                         </div>
                         <div class="col form-floating">
-                            <input v-model="reqLName" type="text" class="form-control" id="floatingLName" placeholder="Smith">
+                            <input v-model="form.reqLName" type="text" class="form-control" id="floatingLName" placeholder="Smith">
                             <label for="floatingLName">Last Name</label>
                         </div>
                     </div>
                     <div class="form-floating">
-                            <input v-model="reqPhoneNum" type="number" class="form-control" id="floatingPhoneNum" placeholder="603-555-1234" required>
+                            <input v-model="form.reqPhoneNum" type="text" class="form-control" id="floatingPhoneNum" placeholder="603-555-1234" required>
                             <label for="floatingPhoneNum">Phone #</label>
                     </div>
                     <div class="form-floating my-4">
-                            <input v-model="reqEmailAddr" type="email" class="form-control" id="floatingEmail" placeholder="example@abc.com" required>
+                            <input v-model="form.reqEmailAddr" type="email" class="form-control" id="floatingEmail" placeholder="example@abc.com" required>
                             <label for="floatingEmail">Email Address</label>
                     </div>
                     <div class="form-floating my-4">
-                        <textarea v-model="reqTextArea" class="form-control" placeholder="Leave a comment here" id="floatingTextarea" rows="18" style="height: 90%; max-height: 90%;" required></textarea>
+                        <textarea v-model="form.reqTextArea" class="form-control" placeholder="Leave a comment here" id="floatingTextarea" rows="18" style="height: 90%; max-height: 90%;" required></textarea>
                         <label for="floatingTextarea">Let us know how we can help</label>
                     </div>
                     <div class="d-flex gap-2">
-                        <!-- <button class="btn btn-danger"@click="sendMsg()" :disabled="!passesBasicCheck">Send to Derek L.</button> -->
-                        <button class="btn btn-primary" @click.prevent.stop="handleSubmit()" :disabled="!fieldsFilled || isSubmitting">
+                        <button class="btn btn-primary" type="submit" :disabled="!isValid() || isSubmitting">
                             {{ isSubmitting ? 'Submitting...' : 'Submit' }}
                         </button>
                         <button class="btn btn-dark" @click="showModal = false">Cancel</button>
                     </div>
+                    <div v-if="error" class="alert alert-danger mt-2">{{ error }}</div>
+                    <div v-if="success" class="alert alert-success mt-2">Thank you! Your request has been submitted.</div>
                 </form>
             </div>
             <ThankYouConfirm v-else v-model="showModal"/>
